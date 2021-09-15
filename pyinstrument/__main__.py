@@ -191,6 +191,15 @@ def main():
         help="(text renderer only) force no color text output",
     )
 
+    parser.add_option(
+        "-l",
+        "--list",
+        dest="list",
+        action="store_true",
+        default=False,
+        help="list the available domains (e.g. package, dram, core)",
+    )
+
     if not sys.argv[1:]:
         parser.print_help()
         sys.exit(2)
