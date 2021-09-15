@@ -208,6 +208,10 @@ def main():
     # work around a type checking bug...
     args = cast(List[str], args)
 
+    if options.list:
+        print('List will be printed here')
+        sys.exit(0)
+
     if args == [] and options.module_name is None and options.load_prev is None:
         parser.print_help()
         sys.exit(2)
