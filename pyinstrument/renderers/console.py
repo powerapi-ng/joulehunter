@@ -50,7 +50,8 @@ class ConsoleRenderer(Renderer):
             r"",
             r"  _     ._   __/__   _ _  _  _ _/_  ",
             r" /_//_/// /_\ / //_// / //_'/ //    ",
-            r"/   _/        {:>20}".format("v" + pyinstrument.__version__ + " (netzky fork)"),
+            r"/   _/        {:>20}".format("v" + pyinstrument.__version__
+                                           + " (netzky fork)"),
         ]
 
         lines[1] += " Recorded: {:<9}".format(
