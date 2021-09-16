@@ -1,3 +1,6 @@
+# Allows the use of standard collection type hinting from Python 3.7 onwards
+from __future__ import annotations
+
 import os
 from typing import Any
 
