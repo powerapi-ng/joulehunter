@@ -42,3 +42,22 @@ def stringify_domains(domains: list[dict[str, Any]]) -> str:
             text += f"  [{scope_num}] {scope['name']}\n"
     text = text[:-1]
     return text
+
+
+class Energy:
+    def __init__(self, scope):
+        self.scope = scope
+        self.generator = Energy.current_energy_generator(scope)
+
+    @staticmethod
+    def current_energy_generator(scope):
+        rapl_api_path = os.path.join(RAPL_API_DIR, *scope, 'energy_uj')
+
+        with open(rapl_api_path, 'r') as file:
+            while True:
+                energy = float(file.readline()[:-1]) / 10 ** 6
+                file.seek(0)
+                yield energy
+
+    def current_energy(self):
+        return next(self.generator)

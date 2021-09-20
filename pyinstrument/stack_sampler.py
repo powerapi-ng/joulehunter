@@ -45,11 +45,11 @@ class StackSampler:
     last_profile_time: float
     timer_func: Optional[Callable[[], float]]
 
-    def __init__(self) -> None:
+    def __init__(self, timer_func=None) -> None:
         self.subscribers = []
         self.current_sampling_interval = None
         self.last_profile_time = 0.0
-        self.timer_func = None
+        self.timer_func = timer_func
 
     def subscribe(
         self,
@@ -151,12 +151,12 @@ class StackSampler:
         pass
 
 
-def get_stack_sampler() -> StackSampler:
+def get_stack_sampler(timer_func=None) -> StackSampler:
     """
     Gets the stack sampler for the current thread, creating it if necessary
     """
     if not hasattr(thread_locals, "stack_sampler"):
-        thread_locals.stack_sampler = StackSampler()
+        thread_locals.stack_sampler = StackSampler(timer_func)
     return thread_locals.stack_sampler
 
 

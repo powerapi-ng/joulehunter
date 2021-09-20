@@ -8,6 +8,7 @@ from time import process_time
 from typing import IO, Any
 
 from pyinstrument import renderers
+from pyinstrument.energy import Energy
 from pyinstrument.frame import AWAIT_FRAME_IDENTIFIER, OUT_OF_CONTEXT_FRAME_IDENTIFIER
 from pyinstrument.session import Session
 from pyinstrument.stack_sampler import AsyncState, StackSampler, build_call_stack, get_stack_sampler
@@ -44,6 +45,8 @@ class Profiler:
     _active_session: ActiveProfilerSession | None
     _interval: float
     _async_mode: AsyncMode
+
+    current_energy = Energy(['intel-rapl:0', 'intel-rapl:0:0']).current_energy
 
     def __init__(self, interval: float = 0.001, async_mode: AsyncMode = "enabled"):
         """
@@ -126,7 +129,7 @@ class Profiler:
             )
 
             use_async_context = self.async_mode != "disabled"
-            get_stack_sampler().subscribe(
+            get_stack_sampler(Profiler.current_energy).subscribe(
                 self._sampler_saw_call_stack, self.interval, use_async_context
             )
         except:
