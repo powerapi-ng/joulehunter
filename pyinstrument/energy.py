@@ -45,14 +45,16 @@ def stringify_domains(domains: list[dict[str, Any]]) -> str:
 
 
 class Energy:
-    def __init__(self, scope):
-        self.scope = scope
-        self.generator = Energy.current_energy_generator(scope)
+    def __init__(self, domains):
+        self.domains = domains
+        self.generator = Energy.current_energy_generator(domains)
 
     @staticmethod
-    def current_energy_generator(scope):
-        rapl_api_path = os.path.join(RAPL_API_DIR, *scope, 'energy_uj')
+    def current_energy_generator(domains):
+        rapl_api_path = os.path.join(RAPL_API_DIR, *domains, 'energy_uj')
 
+        if not os.path.exists(rapl_api_path):
+            raise RuntimeError("Domain not found")
         with open(rapl_api_path, 'r') as file:
             while True:
                 energy = float(file.readline()[:-1]) / 10 ** 6
