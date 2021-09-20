@@ -38,7 +38,6 @@ class ConsoleRenderer(Renderer):
             return result
 
         self.root_frame = frame
-
         result += self.render_frame(self.root_frame)
         result += "\n"
 
@@ -75,7 +74,9 @@ class ConsoleRenderer(Renderer):
             or frame.total_self_time > 0.2 * self.root_frame.time()
             or frame in frame.group.exit_frames
         ):
-            time_str = self._ansi_color_for_time(frame) + f"{frame.time():.3f}" + self.colors.end
+            time_str = (self._ansi_color_for_time(frame)
+                        + f"{frame.time():.3f} J"
+                        + self.colors.end)
             function_color = self._ansi_color_for_function(frame)
             result = "{indent}{time_str} {function_color}{function}{c.end}  {c.faint}{code_position}{c.end}\n".format(
                 indent=indent,
