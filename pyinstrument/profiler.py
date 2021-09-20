@@ -46,9 +46,12 @@ class Profiler:
     _interval: float
     _async_mode: AsyncMode
 
-    current_energy = Energy(['intel-rapl:0', 'intel-rapl:0:0']).current_energy
-
-    def __init__(self, interval: float = 0.001, async_mode: AsyncMode = "enabled"):
+    def __init__(
+            self,
+            interval: float = 0.001,
+            async_mode: AsyncMode = "enabled",
+            domain=None
+            ):
         """
         Note the profiling will not start until :func:`start` is called.
 
@@ -59,6 +62,8 @@ class Profiler:
         self._last_session = None
         self._active_session = None
         self._async_mode = async_mode
+
+        self.current_energy = Energy(domain).current_energy if domain else None
 
     @property
     def interval(self) -> float:
@@ -129,7 +134,7 @@ class Profiler:
             )
 
             use_async_context = self.async_mode != "disabled"
-            get_stack_sampler(Profiler.current_energy).subscribe(
+            get_stack_sampler(self.current_energy).subscribe(
                 self._sampler_saw_call_stack, self.interval, use_async_context
             )
         except:

@@ -201,6 +201,24 @@ def main():
         help="list the available domains (e.g. package, dram, core)",
     )
 
+    parser.add_option(
+        "-p",
+        "--package",
+        dest="package",
+        action="store",
+        default=0,
+        help="select the package to analyze (default is 0)",
+    )
+
+    parser.add_option(
+        "-s",
+        "--scope",
+        dest="scope",
+        action="store",
+        help="select the scope to analyze "
+             "(if not specified, the package will be chosen)",
+    )
+
     if not sys.argv[1:]:
         parser.print_help()
         sys.exit(2)
@@ -213,6 +231,11 @@ def main():
         domains = energy.available_domains()
         print(energy.stringify_domains(domains))
         sys.exit(0)
+
+    domain = [f'intel-rapl:{options.package}']
+
+    if options.scope:
+        domain.append(f'intel-rapl:{options.package}:{options.scope}')
 
     if args == [] and options.module_name is None and options.load_prev is None:
         parser.print_help()
@@ -275,7 +298,7 @@ def main():
         # because it will always be capturing the whole program, we never want
         # any execution to be <out-of-context>, and it avoids duplicate
         # profiler errors.
-        profiler = Profiler(async_mode="disabled")
+        profiler = Profiler(async_mode="disabled", domain=domain)
 
         profiler.start()
 
