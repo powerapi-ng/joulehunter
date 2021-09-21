@@ -12,22 +12,23 @@ def available_domains() -> list[dict[str, Any]]:
     if not os.path.exists(RAPL_API_DIR):
         raise RuntimeError("RAPL API is not available on this machine")
 
-    sockets = [
+    packages = [
         {"dirname": dirname,
          "name": domain_name([dirname]),
          "scopes": []}
         for dirname in sorted(os.listdir(RAPL_API_DIR))
         if dirname.startswith("intel-rapl")]
 
-    for socket in sockets:
-        socket["scopes"] = [
+    for package in packages:
+        package["scopes"] = [
             {"dirname": dirname,
-             "name": domain_name([socket["dirname"], dirname])}
+             "name": domain_name([package["dirname"], dirname])}
             for dirname
-            in sorted(os.listdir(os.path.join(RAPL_API_DIR, socket["dirname"])))
+            in sorted(os.listdir(os.path.join(RAPL_API_DIR,
+                                              package["dirname"])))
             if dirname.startswith("intel-rapl")]
 
-    return sockets
+    return packages
 
 
 def domain_name(dirnames: list[str]) -> str:
@@ -37,24 +38,24 @@ def domain_name(dirnames: list[str]) -> str:
 
 def stringify_domains(domains: list[dict[str, Any]]) -> str:
     text = ""
-    for socket_num, socket in enumerate(domains):
-        text += f"[{socket_num}] {socket['name']}\n"
-        for scope_num, scope in enumerate(socket["scopes"]):
+    for package_num, package in enumerate(domains):
+        text += f"[{package_num}] {package['name']}\n"
+        for scope_num, scope in enumerate(package["scopes"]):
             text += f"  [{scope_num}] {scope['name']}\n"
     text = text[:-1]
     return text
 
 
 def package_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
-    for socket in domains:
-        if socket['name'] == name:
-            return socket['dirname'].split(':')[-1]
+    for package in domains:
+        if package['name'] == name:
+            return package['dirname'].split(':')[-1]
     raise RuntimeError("Package not found")
 
 
 def scope_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
-    for socket in domains:
-        for scope in socket["scopes"]:
+    for package in domains:
+        for scope in package["scopes"]:
             if scope['name'] == name:
                 return scope['dirname'].split(':')[-1]
     raise RuntimeError("Scope not found")
