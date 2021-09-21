@@ -50,7 +50,8 @@ class Profiler:
             self,
             interval: float = 0.001,
             async_mode: AsyncMode = "enabled",
-            domain=None
+            domain=None,
+            domain_name=None,
             ):
         """
         Note the profiling will not start until :func:`start` is called.
@@ -64,6 +65,7 @@ class Profiler:
         self._async_mode = async_mode
 
         self.current_energy = Energy(domain).current_energy if domain else None
+        self.domain_name = domain_name
 
     @property
     def interval(self) -> float:
@@ -168,6 +170,7 @@ class Profiler:
             program=" ".join(sys.argv),
             start_call_stack=self._active_session.start_call_stack,
             cpu_time=cpu_time,
+            domain_name=self.domain_name,
         )
         self._active_session = None
 

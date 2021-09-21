@@ -62,7 +62,8 @@ class ConsoleRenderer(Renderer):
             lines[2] += f" CPU time: {session.cpu_time:.3f}"
 
         lines.append("")
-        lines.append("Program: %s" % session.program)
+        lines.append(f"Program: {session.program}")
+        lines.append(f"Domain:  {' -> '.join(session.domain_name)}")
         lines.append("")
         lines.append("")
 

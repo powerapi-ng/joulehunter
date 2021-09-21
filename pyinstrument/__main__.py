@@ -232,10 +232,9 @@ def main():
         print(energy.stringify_domains(available_domains))
         sys.exit(0)
 
-    available_domains = None
+    available_domains = energy.available_domains()
 
     if not options.package.isnumeric():
-        available_domains = energy.available_domains()
         options.package = energy.package_name_to_num(available_domains,
                                                      options.package)
 
@@ -243,8 +242,6 @@ def main():
 
     if options.scope:
         if not options.scope.isnumeric():
-            if not available_domains:
-                available_domains = energy.available_domains()
             options.scope = energy.scope_name_to_num(available_domains,
                                                      options.scope)
         domain.append(f'intel-rapl:{options.package}:{options.scope}')
@@ -310,7 +307,10 @@ def main():
         # because it will always be capturing the whole program, we never want
         # any execution to be <out-of-context>, and it avoids duplicate
         # profiler errors.
-        profiler = Profiler(async_mode="disabled", domain=domain)
+        profiler = Profiler(
+            async_mode="disabled",
+            domain=domain,
+            domain_name=energy.dirnames_to_names(available_domains, domain))
 
         profiler.start()
 

@@ -28,6 +28,7 @@ class Session:
         start_call_stack: list[str],
         program: str,
         cpu_time: float,
+        domain_name: list[str],
     ):
         """Session()
 
@@ -42,6 +43,7 @@ class Session:
         self.start_call_stack = start_call_stack
         self.program = program
         self.cpu_time = cpu_time
+        self.domain_name = domain_name
 
     @staticmethod
     def load(filename: PathOrStr) -> Session:
@@ -72,6 +74,7 @@ class Session:
             "start_call_stack": self.start_call_stack,
             "program": self.program,
             "cpu_time": self.cpu_time,
+            "domain_name": self.domain_name,
         }
 
     @staticmethod
@@ -84,6 +87,7 @@ class Session:
             start_call_stack=json_dict["start_call_stack"],
             program=json_dict["program"],
             cpu_time=json_dict["cpu_time"],
+            domain_name=json_dict["domain_name"],
         )
 
     @staticmethod
@@ -109,6 +113,7 @@ class Session:
             start_call_stack=session1.start_call_stack,
             program=session1.program,
             cpu_time=session1.cpu_time + session2.cpu_time,
+            domain_name=session1.domain_name,
         )
 
     def root_frame(self, trim_stem: bool = True) -> BaseFrame | None:

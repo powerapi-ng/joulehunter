@@ -59,6 +59,18 @@ def scope_name_to_num(domains, name):
     raise RuntimeError("Scope not found")
 
 
+def dirnames_to_names(domains, dirnames):
+    names = []
+    for dirname in dirnames:
+        for package in domains:
+            if package['dirname'] == dirname:
+                names.append(package['name'])
+            for scope in package["scopes"]:
+                if scope['dirname'] == dirname:
+                    names.append(scope['name'])
+    return names
+
+
 class Energy:
     def __init__(self, domains):
         self.domains = domains
