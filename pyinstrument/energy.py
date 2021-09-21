@@ -1,6 +1,7 @@
 # Allows the use of standard collection type hinting from Python 3.7 onwards
 from __future__ import annotations
 
+from collections.abc import Generator
 import os
 from typing import Any
 
@@ -44,14 +45,14 @@ def stringify_domains(domains: list[dict[str, Any]]) -> str:
     return text
 
 
-def package_name_to_num(domains, name):
+def package_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
     for socket in domains:
         if socket['name'] == name:
             return socket['dirname'].split(':')[-1]
     raise RuntimeError("Package not found")
 
 
-def scope_name_to_num(domains, name):
+def scope_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
     for socket in domains:
         for scope in socket["scopes"]:
             if scope['name'] == name:
@@ -59,7 +60,8 @@ def scope_name_to_num(domains, name):
     raise RuntimeError("Scope not found")
 
 
-def dirnames_to_names(domains, dirnames):
+def dirnames_to_names(domains: list[dict[str, Any]],
+                      dirnames: list[str]) -> list[str]:
     names = []
     for dirname in dirnames:
         for package in domains:
@@ -77,7 +79,8 @@ class Energy:
         self.generator = Energy.current_energy_generator(domains)
 
     @staticmethod
-    def current_energy_generator(domains):
+    def current_energy_generator(domains: list[str]) -> Generator[
+            float, None, None]:
         rapl_api_path = os.path.join(RAPL_API_DIR, *domains, 'energy_uj')
 
         if not os.path.exists(rapl_api_path):
@@ -88,5 +91,5 @@ class Energy:
                 file.seek(0)
                 yield energy
 
-    def current_energy(self):
+    def current_energy(self) -> float:
         return next(self.generator)
