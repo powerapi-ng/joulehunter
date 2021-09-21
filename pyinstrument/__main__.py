@@ -206,7 +206,7 @@ def main():
         "--package",
         dest="package",
         action="store",
-        default=0,
+        default='0',
         help="select the package to analyze (default is 0)",
     )
 
@@ -228,13 +228,25 @@ def main():
     args = cast(List[str], args)
 
     if options.list:
-        domains = energy.available_domains()
-        print(energy.stringify_domains(domains))
+        available_domains = energy.available_domains()
+        print(energy.stringify_domains(available_domains))
         sys.exit(0)
+
+    available_domains = None
+
+    if not options.package.isnumeric():
+        available_domains = energy.available_domains()
+        options.package = energy.package_name_to_num(available_domains,
+                                                     options.package)
 
     domain = [f'intel-rapl:{options.package}']
 
     if options.scope:
+        if not options.scope.isnumeric():
+            if not available_domains:
+                available_domains = energy.available_domains()
+            options.scope = energy.scope_name_to_num(available_domains,
+                                                     options.scope)
         domain.append(f'intel-rapl:{options.package}:{options.scope}')
 
     if args == [] and options.module_name is None and options.load_prev is None:

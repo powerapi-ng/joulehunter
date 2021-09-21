@@ -44,6 +44,21 @@ def stringify_domains(domains: list[dict[str, Any]]) -> str:
     return text
 
 
+def package_name_to_num(domains, name):
+    for socket in domains:
+        if socket['name'] == name:
+            return socket['dirname'].split(':')[-1]
+    raise RuntimeError("Package not found")
+
+
+def scope_name_to_num(domains, name):
+    for socket in domains:
+        for scope in socket["scopes"]:
+            if scope['name'] == name:
+                return scope['dirname'].split(':')[-1]
+    raise RuntimeError("Scope not found")
+
+
 class Energy:
     def __init__(self, domains):
         self.domains = domains
