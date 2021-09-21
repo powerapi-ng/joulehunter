@@ -75,14 +75,13 @@ def dirnames_to_names(domains: list[dict[str, Any]],
 
 
 class Energy:
-    def __init__(self, domains):
-        self.domains = domains
-        self.generator = Energy.current_energy_generator(domains)
+    def __init__(self, dirnames):
+        self.generator = Energy.current_energy_generator(dirnames)
 
     @staticmethod
-    def current_energy_generator(domains: list[str]) -> Generator[
+    def current_energy_generator(dirnames: list[str]) -> Generator[
             float, None, None]:
-        rapl_api_path = os.path.join(RAPL_API_DIR, *domains, 'energy_uj')
+        rapl_api_path = os.path.join(RAPL_API_DIR, *dirnames, 'energy_uj')
 
         if not os.path.exists(rapl_api_path):
             raise RuntimeError("Domain not found")
