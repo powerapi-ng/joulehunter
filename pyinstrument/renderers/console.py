@@ -48,9 +48,9 @@ class ConsoleRenderer(Renderer):
     def render_preamble(self, session: Session):
         lines = [
             r"",
-            r"  _     ._   __/__   _ _  _  _ _/_  ",
-            r" /_//_/// /_\ / //_// / //_'/ //    ",
-            r"/   _/        {:>20}".format("v" + pyinstrument.__version__),
+            r"   . _     / _  /_    _ _/_ _  _  ",
+            r"  / /_//_// /_'/ //_// //  /_'/   ",
+            r"|/          {:>20}".format("v" + pyinstrument.__version__),
         ]
 
         lines[1] += " Recorded: {:<9}".format(
