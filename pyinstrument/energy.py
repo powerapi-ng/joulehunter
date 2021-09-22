@@ -87,7 +87,7 @@ class Energy:
             raise RuntimeError("Domain not found")
         with open(rapl_api_path, 'r') as file:
             while True:
-                energy = float(file.readline()[:-1]) / 10 ** 6
+                energy = float(file.readline()[:-1]) / 10**6
                 file.seek(0)
                 yield energy
 
