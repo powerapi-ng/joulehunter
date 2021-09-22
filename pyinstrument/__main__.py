@@ -198,7 +198,8 @@ def main():
         dest="list",
         action="store_true",
         default=False,
-        help="list the available domains (e.g. package, dram, core)",
+        help="list the available domains with an arbitrary ID "
+             "(e.g. package, dram, core)",
     )
 
     parser.add_option(
@@ -207,7 +208,8 @@ def main():
         dest="package",
         action="store",
         default='0',
-        help="select the package to analyze (default is 0)",
+        help="select the package (CPU) to analyze (by ID or name - "
+             "default is 0)",
     )
 
     parser.add_option(
@@ -215,8 +217,8 @@ def main():
         "--scope",
         dest="scope",
         action="store",
-        help="select the scope to analyze "
-             "(if not specified, the package will be chosen)",
+        help="select the scope to analyze (by ID or name - if not specified, "
+             "the package will be selected)",
     )
 
     if not sys.argv[1:]:
