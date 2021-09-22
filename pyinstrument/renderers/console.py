@@ -38,7 +38,8 @@ class ConsoleRenderer(Renderer):
             return result
 
         self.root_frame = frame
-        result += self.render_frame(self.root_frame)
+        result += self.render_frame(
+            self.root_frame, total_energy=self.root_frame.time())
         result += "\n"
 
         return result
@@ -69,15 +70,22 @@ class ConsoleRenderer(Renderer):
 
         return "\n".join(lines)
 
-    def render_frame(self, frame: BaseFrame, indent: str = "", child_indent: str = "") -> str:
+    def render_frame(
+            self, frame: BaseFrame,
+            indent: str = "",
+            child_indent: str = "",
+            total_energy: float = None) -> str:
         if not frame.group or (
             frame.group.root == frame
             or frame.total_self_time > 0.2 * self.root_frame.time()
             or frame in frame.group.exit_frames
         ):
             time_str = (self._ansi_color_for_time(frame)
-                        + f"{frame.time():.3f} J"
-                        + self.colors.end)
+                        + f"{frame.time():.3f} J")
+            if total_energy:
+                percentage = frame.time() / total_energy * 100
+                time_str += f" [{percentage:.1f}%]"
+            time_str += self.colors.end
             function_color = self._ansi_color_for_function(frame)
             result = "{indent}{time_str} {function_color}{function}{c.end}  {c.faint}{code_position}{c.end}\n".format(
                 indent=indent,
@@ -115,7 +123,9 @@ class ConsoleRenderer(Renderer):
                 else:
                     c_indent = child_indent + indents["└"]
                     cc_indent = child_indent + indents[" "]
-                result += self.render_frame(child, indent=c_indent, child_indent=cc_indent)
+                result += self.render_frame(
+                    child, indent=c_indent, child_indent=cc_indent,
+                    total_energy=total_energy)
 
         return result
 
