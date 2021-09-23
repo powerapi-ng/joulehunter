@@ -46,19 +46,20 @@ class ConsoleRenderer(Renderer):
 
     # pylint: disable=W1401
     def render_preamble(self, session: Session):
+        c = self.colors
         lines = [
-            r"",
-            r"   . _     / _  /_    _ _/_ _  _  ",
-            r"  / /_//_// /_'/ //_// //  /_'/   ",
-            r"|/                                ",
+            f"",
+            f"{c.bold}{c.cyan}   . _     / _  /_    _ _/_ _  _  {c.end}{c.end}",
+            f"{c.bold}{c.cyan}  / /_//_// /_'/ //_// //  /_'/   {c.end}{c.end}",
+            f"{c.bold}{c.cyan}|/                                {c.end}{c.end}",
         ]
+        lines[1] += f"{c.cyan}Duration:{c.end} {session.duration:<12.3f}"
+        lines[2] += f"{c.cyan}Package:{c.end}  {session.domain_name[0]:<12}"
+        lines[3] += f"{c.cyan}Program:{c.end}  {session.program}"
 
-        lines[1] += f"Duration: {session.duration:<12.3f}"
-        lines[1] += f"Samples:   {session.sample_count}"
-        lines[2] += f"Package:  {session.domain_name[0]:<12}"
+        lines[1] += f"{c.cyan}Samples:{c.end}   {session.sample_count}"
         if len(session.domain_name) == 2:
-            lines[2] += f"Component: {session.domain_name[1]}"
-        lines[3] += f"Program:  {session.program}"
+            lines[2] += f"{c.cyan}Component:{c.end} {session.domain_name[1]}"
         lines.append("")
         lines.append("")
 
