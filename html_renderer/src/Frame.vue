@@ -13,7 +13,7 @@
       </div>
       <div class="time"
            :style="timeStyle">
-        {{formattedTime}}
+        {{formattedTime}} J
       </div>
       <div class="name">{{frame.function}}</div>
       <div class="spacer" style="flex: 1"></div>

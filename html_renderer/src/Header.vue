@@ -2,7 +2,7 @@
   <div class="header">
     <div class="margins">
       <div class="row">
-        <div class="title">pyinstrument</div>
+        <div class="title">joulehunter</div>
         <div class="metrics">
           <div class="metric-label">Recorded:</div>
           <div class="metric-value">{{startTime}}</div>
