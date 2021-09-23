@@ -7,13 +7,13 @@ import types
 from time import process_time
 from typing import IO, Any
 
-from pyinstrument import renderers
-from pyinstrument.energy import Energy
-from pyinstrument.frame import AWAIT_FRAME_IDENTIFIER, OUT_OF_CONTEXT_FRAME_IDENTIFIER
-from pyinstrument.session import Session
-from pyinstrument.stack_sampler import AsyncState, StackSampler, build_call_stack, get_stack_sampler
-from pyinstrument.typing import LiteralStr
-from pyinstrument.util import file_supports_color, file_supports_unicode
+from joulehunter import renderers
+from joulehunter.energy import Energy
+from joulehunter.frame import AWAIT_FRAME_IDENTIFIER, OUT_OF_CONTEXT_FRAME_IDENTIFIER
+from joulehunter.session import Session
+from joulehunter.stack_sampler import AsyncState, StackSampler, build_call_stack, get_stack_sampler
+from joulehunter.typing import LiteralStr
+from joulehunter.util import file_supports_color, file_supports_unicode
 
 # pyright: strict
 
@@ -38,7 +38,7 @@ AsyncMode = LiteralStr["enabled", "disabled", "strict"]
 
 class Profiler:
     """
-    The profiler - this is the main way to use pyinstrument.
+    The profiler - this is the main way to use joulehunter.
     """
 
     _last_session: Session | None
@@ -122,7 +122,7 @@ class Profiler:
             present a simpler output.
 
             You might want to set this to ``inspect.currentframe().f_back`` if you are
-            writing a library that wraps pyinstrument.
+            writing a library that wraps joulehunter.
         """
 
         if caller_frame is None:
@@ -228,7 +228,7 @@ class Profiler:
     ):
         if not self._active_session:
             raise RuntimeError(
-                "Received a call stack without an active session. Please file an issue on pyinstrument Github describing how you made this happen!"
+                "Received a call stack without an active session. Please file an issue on joulehunter Github describing how you made this happen!"
             )
 
         if (

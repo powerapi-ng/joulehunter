@@ -3,7 +3,7 @@ import time
 
 import trio
 
-import pyinstrument
+import joulehunter
 
 
 def do_nothing():
@@ -19,7 +19,7 @@ def busy_wait(duration):
 
 async def say(what, when, profile=False):
     if profile:
-        p = pyinstrument.Profiler()
+        p = joulehunter.Profiler()
         p.start()
 
     busy_wait(0.1)

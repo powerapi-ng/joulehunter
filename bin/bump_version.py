@@ -13,12 +13,12 @@ from pathlib import Path
 import click
 from packaging.version import InvalidVersion, Version
 
-import pyinstrument
+import joulehunter
 
 config = [
     # file path, version find/replace format
     ("setup.py", 'version="{}"'),
-    ("pyinstrument/__init__.py", '__version__ = "{}"'),
+    ("joulehunter/__init__.py", '__version__ = "{}"'),
     ("docs/conf.py", 'release = "{}"'),
 ]
 
@@ -29,7 +29,7 @@ OFF = "\u001b[0m"
 
 @click.command()
 def bump_version() -> None:
-    current_version = pyinstrument.__version__
+    current_version = joulehunter.__version__
 
     try:
         commit_date_str = subprocess.run(
@@ -47,7 +47,7 @@ def bump_version() -> None:
         cd_date, cd_time, cd_tz = commit_date_str.split(" ")
 
         url_opts = urllib.parse.urlencode({"q": f"is:pr merged:>{cd_date}T{cd_time}{cd_tz}"})
-        url = f"https://github.com/joerick/pyinstrument/pulls?{url_opts}"
+        url = f"https://github.com/joerick/joulehunter/pulls?{url_opts}"
 
         print(f"PRs merged since last release:\n  {url}")
         print()

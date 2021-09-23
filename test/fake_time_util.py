@@ -6,7 +6,7 @@ from unittest import mock
 
 from trio.testing import MockClock
 
-from pyinstrument import stack_sampler
+from joulehunter import stack_sampler
 
 
 class FakeClock:

@@ -7,8 +7,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.utils.module_loading import import_string
 
-from pyinstrument import Profiler
-from pyinstrument.renderers.html import HTMLRenderer
+from joulehunter import Profiler
+from joulehunter.renderers.html import HTMLRenderer
 
 try:
     from django.utils.deprecation import MiddlewareMixin
@@ -18,19 +18,19 @@ except ImportError:
 
 class ProfilerMiddleware(MiddlewareMixin):  # type: ignore
     def process_request(self, request):
-        profile_dir = getattr(settings, "PYINSTRUMENT_PROFILE_DIR", None)
+        profile_dir = getattr(settings, "joulehunter_PROFILE_DIR", None)
 
-        func_or_path = getattr(settings, "PYINSTRUMENT_SHOW_CALLBACK", None)
+        func_or_path = getattr(settings, "joulehunter_SHOW_CALLBACK", None)
         if isinstance(func_or_path, str):
-            show_pyinstrument = import_string(func_or_path)
+            show_joulehunter = import_string(func_or_path)
         elif callable(func_or_path):
-            show_pyinstrument = func_or_path
+            show_joulehunter = func_or_path
         else:
-            show_pyinstrument = lambda request: True
+            show_joulehunter = lambda request: True
 
         if (
-            show_pyinstrument(request)
-            and getattr(settings, "PYINSTRUMENT_URL_ARGUMENT", "profile") in request.GET
+            show_joulehunter(request)
+            and getattr(settings, "joulehunter_URL_ARGUMENT", "profile") in request.GET
         ) or profile_dir:
             profiler = Profiler()
             profiler.start()
@@ -44,7 +44,7 @@ class ProfilerMiddleware(MiddlewareMixin):  # type: ignore
             renderer = HTMLRenderer()
             output_html = renderer.render(profile_session)
 
-            profile_dir = getattr(settings, "PYINSTRUMENT_PROFILE_DIR", None)
+            profile_dir = getattr(settings, "joulehunter_PROFILE_DIR", None)
 
             # Limit the length of the file name (255 characters is the max limit on major current OS, but it is rather
             # high and the other parts (see line 36) are to be taken into account; so a hundred will be fine here).
@@ -69,7 +69,7 @@ class ProfilerMiddleware(MiddlewareMixin):  # type: ignore
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(output_html)
 
-            if getattr(settings, "PYINSTRUMENT_URL_ARGUMENT", "profile") in request.GET:
+            if getattr(settings, "joulehunter_URL_ARGUMENT", "profile") in request.GET:
                 return HttpResponse(output_html)
             else:
                 return response

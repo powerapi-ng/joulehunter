@@ -13,7 +13,7 @@ import re
 from operator import methodcaller
 from typing import Any, Callable, Dict, Union
 
-from pyinstrument.frame import BaseFrame, Frame, FrameGroup, SelfTimeFrame
+from joulehunter.frame import BaseFrame, Frame, FrameGroup, SelfTimeFrame
 
 # pyright: strict
 

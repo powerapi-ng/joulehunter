@@ -7,7 +7,7 @@ from timeit import Timer
 
 import django.conf
 
-import pyinstrument
+import joulehunter
 
 django.conf.settings.configure(
     INSTALLED_APPS=(),
@@ -54,9 +54,9 @@ def time_cProfile(function, repeats):
     return p.runcall(lambda: timer.repeat(number=repeats))
 
 
-def time_pyinstrument(function, repeats):
+def time_joulehunter(function, repeats):
     timer = Timer(stmt=function)
-    p = pyinstrument.Profiler()
+    p = joulehunter.Profiler()
     p.start()
     result = timer.repeat(number=repeats)
     p.stop()
@@ -67,7 +67,7 @@ profilers = (
     ("Base", time_base),
     # ('profile', time_profile),
     ("cProfile", time_cProfile),
-    ("pyinstrument", time_pyinstrument),
+    ("joulehunter", time_joulehunter),
 )
 
 tests = (

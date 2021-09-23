@@ -5,7 +5,7 @@ from timeit import Timer
 import django.conf
 import django.template.loader
 
-import pyinstrument
+import joulehunter
 
 django.conf.settings.configure(
     INSTALLED_APPS=(),
@@ -39,16 +39,16 @@ base_timings = test_func()
 cp = cProfile.Profile()
 cProfile_timings = cp.runcall(test_func)
 
-# pyinstrument
-profiler = pyinstrument.Profiler()
+# joulehunter
+profiler = joulehunter.Profiler()
 profiler.start()
-pyinstrument_timings = test_func()
+joulehunter_timings = test_func()
 profiler.stop()
 
-# pyinstrument timeline
-# profiler = pyinstrument.Profiler(timeline=True)
+# joulehunter timeline
+# profiler = joulehunter.Profiler(timeline=True)
 # profiler.start()
-# pyinstrument_timeline_timings = test_func()
+# joulehunter_timeline_timings = test_func()
 # profiler.stop()
 
 with open("out.html", "w") as f:
@@ -60,8 +60,8 @@ graph_data = (
     ("Base timings", min(base_timings)),
     # ('profile', min(profile_timings)),
     ("cProfile", min(cProfile_timings)),
-    ("pyinstrument", min(pyinstrument_timings)),
-    # ('pyinstrument timeline', min(pyinstrument_timeline_timings)),
+    ("joulehunter", min(joulehunter_timings)),
+    # ('joulehunter timeline', min(joulehunter_timeline_timings)),
 )
 
 from ascii_graph import Pyasciigraph

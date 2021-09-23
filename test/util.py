@@ -6,8 +6,8 @@ from typing import Generator, Generic, Iterable, Iterator, NoReturn, Optional, T
 import trio
 from flaky import flaky
 
-from pyinstrument.frame import BaseFrame
-from pyinstrument.profiler import Profiler
+from joulehunter.frame import BaseFrame
+from joulehunter.profiler import Profiler
 
 if "CI" in os.environ:
     # a decorator that allows some test flakyness in CI environments, presumably

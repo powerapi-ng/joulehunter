@@ -4,8 +4,8 @@ import time
 
 import pytest
 
-from pyinstrument import Profiler
-from pyinstrument.renderers import ConsoleRenderer, HTMLRenderer, JSONRenderer
+from joulehunter import Profiler
+from joulehunter.renderers import ConsoleRenderer, HTMLRenderer, JSONRenderer
 
 # Utilities
 
@@ -35,7 +35,7 @@ def deep_profiler_session():
     profiler = Profiler()
     profiler.start()
 
-    # give 120 frames for pyinstrument to do its work.
+    # give 120 frames for joulehunter to do its work.
     recursion_depth = sys.getrecursionlimit() - current_stack_depth() - 120
     recurse(recursion_depth)
 

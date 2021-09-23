@@ -3,10 +3,10 @@ from __future__ import annotations
 import json
 from typing import Any, Callable
 
-from pyinstrument import processors
-from pyinstrument.frame import BaseFrame
-from pyinstrument.renderers.base import ProcessorList, Renderer
-from pyinstrument.session import Session
+from joulehunter import processors
+from joulehunter.frame import BaseFrame
+from joulehunter.renderers.base import ProcessorList, Renderer
+from joulehunter.session import Session
 
 # pyright: strict
 

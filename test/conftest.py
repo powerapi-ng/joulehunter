@@ -2,7 +2,7 @@ import sys
 
 import pytest
 
-from pyinstrument import stack_sampler
+from joulehunter import stack_sampler
 
 
 @pytest.fixture(autouse=True)

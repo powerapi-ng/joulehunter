@@ -7,10 +7,10 @@ import urllib.parse
 import webbrowser
 from typing import Any
 
-from pyinstrument import processors
-from pyinstrument.renderers.base import ProcessorList, Renderer
-from pyinstrument.renderers.jsonrenderer import JSONRenderer
-from pyinstrument.session import Session
+from joulehunter import processors
+from joulehunter.renderers.base import ProcessorList, Renderer
+from joulehunter.renderers.jsonrenderer import JSONRenderer
+from joulehunter.session import Session
 
 # pyright: strict
 
@@ -29,7 +29,7 @@ class HTMLRenderer(Renderer):
         if not os.path.exists(os.path.join(resources_dir, "app.js")):
             raise RuntimeError(
                 "Could not find app.js. If you are running "
-                "pyinstrument from a git checkout, run 'python "
+                "joulehunter from a git checkout, run 'python "
                 "setup.py build' to compile the Javascript "
                 "(requires nodejs)."
             )

@@ -2,8 +2,8 @@
 line-length = 100
 
 [tool.pyright]
-include = ["pyinstrument", "test"]
-ignore = ["pyinstrument/vendor"]
+include = ["joulehunter", "test"]
+ignore = ["joulehunter/vendor"]
 pythonVersion = "3.7"
 
 [tool.isort]

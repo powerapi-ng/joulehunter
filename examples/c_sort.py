@@ -4,7 +4,7 @@ Python function. In an ideal world, we'd be able to record the time inside the
 Python function _inside_ list.sort, but it's not possible currently, due to
 the way that Python records frame objects.
 
-Perhaps one day we could add some functionality to pyinstrument_cext to keep
+Perhaps one day we could add some functionality to joulehunter_cext to keep
 a parallel stack containing both C and Python frames. But for now, this is
 fine.
 """

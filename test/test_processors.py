@@ -2,8 +2,8 @@ import sys
 
 from pytest import approx
 
-from pyinstrument import processors
-from pyinstrument.frame import Frame, SelfTimeFrame
+from joulehunter import processors
+from joulehunter.frame import Frame, SelfTimeFrame
 
 all_processors = [
     processors.aggregate_repeated_calls,

@@ -8,9 +8,9 @@ from typing import Generator, Optional
 import pytest
 import trio
 
-from pyinstrument import Profiler, renderers
-from pyinstrument.frame import BaseFrame, Frame
-from pyinstrument.session import Session
+from joulehunter import Profiler, renderers
+from joulehunter.frame import BaseFrame, Frame
+from joulehunter.session import Session
 
 from .util import assert_never, busy_wait, flaky_in_ci
 

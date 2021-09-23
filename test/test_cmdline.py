@@ -39,49 +39,49 @@ print('os.getcwd()', os.getcwd(), file=sys.stderr)
 
 
 @pytest.mark.parametrize(
-    "pyinstrument_invocation",
-    (["pyinstrument"], [sys.executable, "-m", "pyinstrument"]),
+    "joulehunter_invocation",
+    (["joulehunter"], [sys.executable, "-m", "joulehunter"]),
 )
 class TestCommandLine:
-    def test_command_line(self, pyinstrument_invocation, tmp_path: Path):
+    def test_command_line(self, joulehunter_invocation, tmp_path: Path):
         busy_wait_py = tmp_path / "busy_wait.py"
         busy_wait_py.write_text(BUSY_WAIT_SCRIPT)
 
         # need to wrap Paths with str() due to CPython bug 33617 (fixed in Python 3.8)
-        output = subprocess.check_output([*pyinstrument_invocation, str(busy_wait_py)])
+        output = subprocess.check_output([*joulehunter_invocation, str(busy_wait_py)])
 
         assert "busy_wait" in str(output)
         assert "do_nothing" in str(output)
 
-    def test_module_running(self, pyinstrument_invocation, tmp_path: Path):
+    def test_module_running(self, joulehunter_invocation, tmp_path: Path):
         (tmp_path / "busy_wait_module").mkdir()
         (tmp_path / "busy_wait_module" / "__init__.py").touch()
         (tmp_path / "busy_wait_module" / "__main__.py").write_text(BUSY_WAIT_SCRIPT)
 
         output = subprocess.check_output(
-            [*pyinstrument_invocation, "-m", "busy_wait_module"], cwd=tmp_path
+            [*joulehunter_invocation, "-m", "busy_wait_module"], cwd=tmp_path
         )
 
         assert "busy_wait" in str(output)
         assert "do_nothing" in str(output)
 
-    def test_single_file_module_running(self, pyinstrument_invocation, tmp_path: Path):
+    def test_single_file_module_running(self, joulehunter_invocation, tmp_path: Path):
         busy_wait_py = tmp_path / "busy_wait.py"
         busy_wait_py.write_text(BUSY_WAIT_SCRIPT)
 
         output = subprocess.check_output(
-            [*pyinstrument_invocation, "-m", "busy_wait"], cwd=tmp_path
+            [*joulehunter_invocation, "-m", "busy_wait"], cwd=tmp_path
         )
 
         assert "busy_wait" in str(output)
         assert "do_nothing" in str(output)
 
-    def test_running_yourself_as_module(self, pyinstrument_invocation):
+    def test_running_yourself_as_module(self, joulehunter_invocation):
         subprocess.check_call(
-            [*pyinstrument_invocation, "-m", "pyinstrument"],
+            [*joulehunter_invocation, "-m", "joulehunter"],
         )
 
-    def test_path(self, pyinstrument_invocation, tmp_path: Path, monkeypatch):
+    def test_path(self, joulehunter_invocation, tmp_path: Path, monkeypatch):
         if sys.platform == "win32":
             pytest.skip("--from-path is not supported on Windows")
 
@@ -92,15 +92,15 @@ class TestCommandLine:
         monkeypatch.setenv("PATH", str(tmp_path), prepend=os.pathsep)
 
         subprocess.check_call(
-            [*pyinstrument_invocation, "--from-path", "--", "pyi_test_program"],
+            [*joulehunter_invocation, "--from-path", "--", "pyi_test_program"],
         )
 
-    def test_script_execution_details(self, pyinstrument_invocation, tmp_path: Path):
+    def test_script_execution_details(self, joulehunter_invocation, tmp_path: Path):
         program_path = tmp_path / "program.py"
         program_path.write_text(EXECUTION_DETAILS_SCRIPT)
 
         process_pyi = subprocess.run(
-            [*pyinstrument_invocation, str(program_path), "arg1", "arg2"],
+            [*joulehunter_invocation, str(program_path), "arg1", "arg2"],
             stderr=subprocess.PIPE,
             check=True,
             universal_newlines=True,
@@ -116,13 +116,13 @@ class TestCommandLine:
         print("process_native.stderr", process_native.stderr)
         assert process_pyi.stderr == process_native.stderr
 
-    def test_module_execution_details(self, pyinstrument_invocation, tmp_path: Path):
+    def test_module_execution_details(self, joulehunter_invocation, tmp_path: Path):
         (tmp_path / "test_module").mkdir()
         (tmp_path / "test_module" / "__init__.py").touch()
         (tmp_path / "test_module" / "__main__.py").write_text(EXECUTION_DETAILS_SCRIPT)
 
         process_pyi = subprocess.run(
-            [*pyinstrument_invocation, "-m", "test_module", "arg1", "arg2"],
+            [*joulehunter_invocation, "-m", "test_module", "arg1", "arg2"],
             # stderr=subprocess.PIPE,
             check=True,
             cwd=tmp_path,
@@ -140,7 +140,7 @@ class TestCommandLine:
         print("process_native.stderr", process_native.stderr)
         assert process_pyi.stderr == process_native.stderr
 
-    def test_path_execution_details(self, pyinstrument_invocation, tmp_path: Path, monkeypatch):
+    def test_path_execution_details(self, joulehunter_invocation, tmp_path: Path, monkeypatch):
         if sys.platform == "win32":
             pytest.skip("--from-path is not supported on Windows")
 
@@ -151,7 +151,7 @@ class TestCommandLine:
 
         process_pyi = subprocess.run(
             [
-                *pyinstrument_invocation,
+                *joulehunter_invocation,
                 "--from-path",
                 "--",
                 "pyi_test_program",

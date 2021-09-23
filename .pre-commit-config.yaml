@@ -35,4 +35,4 @@ repos:
         language: node
         pass_filenames: false
 
-exclude: ^pyinstrument/renderers/html_resources/app.js$|^pyinstrument/vendor
+exclude: ^joulehunter/renderers/html_resources/app.js$|^joulehunter/vendor

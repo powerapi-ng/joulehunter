@@ -1,6 +1,6 @@
 import time
 
-from pyinstrument import Profiler
+from joulehunter import Profiler
 
 try:
     from flask import Flask, g, make_response, request

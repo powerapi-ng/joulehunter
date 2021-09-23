@@ -1,12 +1,12 @@
 import time
 from typing import Any
 
-import pyinstrument
-from pyinstrument import processors
-from pyinstrument.frame import BaseFrame
-from pyinstrument.renderers.base import ProcessorList, Renderer
-from pyinstrument.session import Session
-from pyinstrument.util import truncate
+import joulehunter
+from joulehunter import processors
+from joulehunter.frame import BaseFrame
+from joulehunter.renderers.base import ProcessorList, Renderer
+from joulehunter.session import Session
+from joulehunter.util import truncate
 
 # pyright: strict
 
@@ -50,7 +50,7 @@ class ConsoleRenderer(Renderer):
             r"",
             r"   . _     / _  /_    _ _/_ _  _  ",
             r"  / /_//_// /_'/ //_// //  /_'/   ",
-            r"|/          {:>20}".format("v" + pyinstrument.__version__),
+            r"|/          {:>20}".format("v" + joulehunter.__version__),
         ]
 
         lines[1] += " Recorded: {:<9}".format(

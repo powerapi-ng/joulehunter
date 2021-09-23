@@ -1,4 +1,4 @@
-pyinstrument
+joulehunter
 ============
 
 ```{toctree}
@@ -10,7 +10,7 @@ Home <home.md>
 guide.md
 how-it-works.md
 reference.md
-GitHub <https://github.com/joerick/pyinstrument>
+GitHub <https://github.com/joerick/joulehunter>
 ```
 
 Indices and tables

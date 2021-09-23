@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import pytest
 
-from pyinstrument.low_level.stat_profile import setstatprofile
+from joulehunter.low_level.stat_profile import setstatprofile
 
 from ..util import busy_wait, do_nothing
 

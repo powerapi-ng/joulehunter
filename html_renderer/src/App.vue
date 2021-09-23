@@ -68,7 +68,7 @@ export default {
     session: {
       handler() {
         if (!this.session || !this.rootFrame) {
-          document.title = 'Pyinstrument';
+          document.title = 'joulehunter';
           return;
         }
 
@@ -79,7 +79,7 @@ export default {
           name = this.session.program;
         }
 
-        document.title = `${duration}s - ${name} - pyinstrument`
+        document.title = `${duration}s - ${name} - joulehunter`
       },
       immediate: true,
     },

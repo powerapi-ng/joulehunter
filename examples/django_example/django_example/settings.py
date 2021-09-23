@@ -32,7 +32,7 @@ MIDDLEWARE = (
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "pyinstrument.middleware.ProfilerMiddleware",
+    "joulehunter.middleware.ProfilerMiddleware",
 )
 
 TEMPLATES = [
@@ -56,8 +56,8 @@ TEMPLATES = [
 ]
 
 
-def custom_show_pyinstrument(request):
+def custom_show_joulehunter(request):
     return request.user.is_superuser
 
 
-PYINSTRUMENT_SHOW_CALLBACK = "%s.custom_show_pyinstrument" % __name__
+joulehunter_SHOW_CALLBACK = "%s.custom_show_joulehunter" % __name__

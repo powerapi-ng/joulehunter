@@ -4,7 +4,7 @@ import time
 
 import pytest
 
-from pyinstrument import stack_sampler
+from joulehunter import stack_sampler
 
 from .util import do_nothing
 

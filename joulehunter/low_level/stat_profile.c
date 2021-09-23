@@ -146,7 +146,7 @@ static void ProfilerState_Dealloc(ProfilerState *self) {
 
 static PyTypeObject ProfilerState_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
-    "pyinstrument.stat_profile.ProfilerState",        /* tp_name */
+    "joulehunter.stat_profile.ProfilerState",        /* tp_name */
     sizeof(ProfilerState),                    /* tp_basicsize */
     0,                                        /* tp_itemsize */
     (destructor)ProfilerState_Dealloc,        /* tp_dealloc */

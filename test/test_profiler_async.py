@@ -11,10 +11,10 @@ import trio
 import trio._core._run
 import trio.lowlevel
 
-from pyinstrument import processors, stack_sampler
-from pyinstrument.frame import AwaitTimeFrame, OutOfContextFrame
-from pyinstrument.profiler import Profiler
-from pyinstrument.session import Session
+from joulehunter import processors, stack_sampler
+from joulehunter.frame import AwaitTimeFrame, OutOfContextFrame
+from joulehunter.profiler import Profiler
+from joulehunter.session import Session
 
 from .util import assert_never, flaky_in_ci, walk_frames
 

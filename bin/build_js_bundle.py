@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 HTML_RENDERER_DIR = "html_renderer"
-JS_BUNDLE = "pyinstrument/renderers/html_resources/app.js"
+JS_BUNDLE = "joulehunter/renderers/html_resources/app.js"
 
 if __name__ == "__main__":
     # chdir to root of repo

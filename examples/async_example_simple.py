@@ -1,6 +1,6 @@
 import asyncio
 
-from pyinstrument import Profiler
+from joulehunter import Profiler
 
 
 async def main():

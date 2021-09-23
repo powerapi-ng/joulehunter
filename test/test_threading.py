@@ -4,7 +4,7 @@ from test.fake_time_util import fake_time
 
 import pytest
 
-from pyinstrument import Profiler
+from joulehunter import Profiler
 
 from .util import do_nothing
 

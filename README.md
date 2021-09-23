@@ -2,20 +2,20 @@ joulehunter
 ============
 ##### Work in progress 😄
 
-[![PyPI version](https://badge.fury.io/py/pyinstrument.svg)](https://badge.fury.io/py/pyinstrument)
-[![.github/workflows/test.yml](https://github.com/joerick/pyinstrument/actions/workflows/test.yml/badge.svg)](https://github.com/joerick/pyinstrument/actions/workflows/test.yml)
-[![Build wheels](https://github.com/joerick/pyinstrument/actions/workflows/wheels.yml/badge.svg)](https://github.com/joerick/pyinstrument/actions/workflows/wheels.yml)
+[![PyPI version](https://badge.fury.io/py/joulehunter.svg)](https://badge.fury.io/py/joulehunter)
+[![.github/workflows/test.yml](https://github.com/joerick/joulehunter/actions/workflows/test.yml/badge.svg)](https://github.com/joerick/joulehunter/actions/workflows/test.yml)
+[![Build wheels](https://github.com/joerick/joulehunter/actions/workflows/wheels.yml/badge.svg)](https://github.com/joerick/joulehunter/actions/workflows/wheels.yml)
 
-[Documentation](https://pyinstrument.readthedocs.io/)
+[Documentation](https://joulehunter.readthedocs.io/)
 
 <!-- MARK intro start -->
 
-[![Screenshot](docs/img/screenshot.jpg)](https://raw.githubusercontent.com/joerick/pyinstrument/main/docs/img/screenshot.jpg)
+[![Screenshot](docs/img/screenshot.jpg)](https://raw.githubusercontent.com/joerick/joulehunter/main/docs/img/screenshot.jpg)
 
-Pyinstrument is a Python profiler. A profiler is a tool to help you optimize
+joulehunter is a Python profiler. A profiler is a tool to help you optimize
 your code - make it faster. To get the biggest speed increase you should
 [focus on the slowest part of your program](https://en.wikipedia.org/wiki/Amdahl%27s_law).
-Pyinstrument helps you find it!
+joulehunter helps you find it!
 
 <!-- MARK intro end -->
 
@@ -24,31 +24,31 @@ Installation
 
 <!-- MARK installation start -->
 
-    pip install pyinstrument
+    pip install joulehunter
 
-Pyinstrument supports Python 3.7+.
+joulehunter supports Python 3.7+.
 
 <!-- MARK installation end -->
 
-> To run Pyinstrument from a git checkout, there's a build step.
+> To run joulehunter from a git checkout, there's a build step.
 Take a look at [Contributing](#contributing) for more info.
 
 Documentation
 -------------
 
-To learn how to use pyinstrument, or to check the reference, head to the
-[documentation](https://pyinstrument.readthedocs.io/).
+To learn how to use joulehunter, or to check the reference, head to the
+[documentation](https://joulehunter.readthedocs.io/).
 
 Known issues
 ------------
 
 - Profiling code inside a Docker container can cause some strange results,
-  because the gettimeofday syscall that pyinstrument uses is slow in that
-  environment. See [#83](https://github.com/joerick/pyinstrument/issues/83)
-- When using `pyinstrument script.py` where `script.py` contains a class
+  because the gettimeofday syscall that joulehunter uses is slow in that
+  environment. See [#83](https://github.com/joerick/joulehunter/issues/83)
+- When using `joulehunter script.py` where `script.py` contains a class
   serialized with `pickle`, you might encounter errors because the
   serialisation machinery doesn't know where `__main__` is. [See this issue
-  for workarounds](https://github.com/joerick/pyinstrument/issues/109#issuecomment-722276263)
+  for workarounds](https://github.com/joerick/joulehunter/issues/109#issuecomment-722276263)
 
 Changelog
 ---------
@@ -65,7 +65,7 @@ Changelog
 
 ### v4.0.0
 
--   Async support! Pyinstrument now detects when an async task hits an await,
+-   Async support! joulehunter now detects when an async task hits an await,
     and tracks time spent outside of the async context under this await.
 
     So, for example, here's a simple script with an async task that does a
@@ -73,7 +73,7 @@ Changelog
 
     ```python
     import asyncio
-    from pyinstrument import Profiler
+    from joulehunter import Profiler
 
     async def main():
         p = Profiler(async_mode='disabled')
@@ -88,7 +88,7 @@ Changelog
     asyncio.run(main())
     ```
 
-    Before Pyinstrument 4.0.0, we'd see only time spent in the run loop, like
+    Before joulehunter 4.0.0, we'd see only time spent in the run loop, like
     this:
 
     ```
@@ -104,7 +104,7 @@ Changelog
              1.005 kqueue.control  <built-in>:0
     ```
 
-    Now, with pyinstrument 4.0.0, we get:
+    Now, with joulehunter 4.0.0, we get:
 
           _     ._   __/__   _ _  _  _ _/_   Recorded: 18:30:43  Samples:  2
          /_//_/// /_\ / //_// / //_'/ //     Duration: 1.007     CPU time: 0.001
@@ -120,11 +120,11 @@ Changelog
     For more information, check out the [async profiling documentation] and
     the [Profiler.async_mode] property.
 
--   Pyinstrument has a [documentation site], including full Python API docs!
+-   joulehunter has a [documentation site], including full Python API docs!
 
-[async profiling documentation]: https://pyinstrument.readthedocs.io/en/latest/how-it-works.html#async-profiling
-[Profiler.async_mode]: https://pyinstrument.readthedocs.io/en/latest/reference.html#pyinstrument.Profiler.async_mode
-[documentation site]: https://pyinstrument.readthedocs.io
+[async profiling documentation]: https://joulehunter.readthedocs.io/en/latest/how-it-works.html#async-profiling
+[Profiler.async_mode]: https://joulehunter.readthedocs.io/en/latest/reference.html#joulehunter.Profiler.async_mode
+[documentation site]: https://joulehunter.readthedocs.io
 
 ### v3.4.2
 
@@ -142,14 +142,14 @@ Changelog
 
 ### v3.3.0
 
-- Fixed issue with `pyinstrument -m module`, where pyinstrument wouldn't find
+- Fixed issue with `joulehunter -m module`, where joulehunter wouldn't find
   modules in the current directory.
 - Dropped support for Python 2.7 and 3.5. Old versions will remain available
   on PyPI, and pip should choose the correct one automatically.
 
 ### v3.2.0
 
-- Added the ability to track time in C functions. Minor note - Pyinstrument
+- Added the ability to track time in C functions. Minor note - joulehunter
   will record time spent C functions as 'leaf' functions, due to a limitation
   in how Python records frames. `Python -> C -> Python` is recorded as
   `Python -> Python`, but `Python -> Python -> C` will be attributed correctly.
@@ -166,8 +166,8 @@ Changelog
 
 ### v3.1.0
 
-- Added PYINSTRUMENT_SHOW_CALLBACK option on the Django middleware to
-  add a condition to showing the profile (could be used to run pyinstrument
+- Added joulehunter_SHOW_CALLBACK option on the Django middleware to
+  add a condition to showing the profile (could be used to run joulehunter
   on a live server!)
 - Fixed bug in the Django middleware where file would not be written because
   of a unicode error
@@ -182,7 +182,7 @@ Changelog
 
 - Add `--show` and `--show-regex` options, to mark certain files to be
   displayed. This helps to profile inside specific modules, while hiding
-  others. For example, `pyinstrument --show '*/sympy/*' script.py`.
+  others. For example, `joulehunter --show '*/sympy/*' script.py`.
 
 ### v3.0.1
 
@@ -191,7 +191,7 @@ Changelog
 
 ### v3.0.0
 
-- Pyinstrument will now hide traces through libraries that you're using by default. So instead of showing you loads of frames going through the internals of something external e.g. urllib, it lets you focus on your code.
+- joulehunter will now hide traces through libraries that you're using by default. So instead of showing you loads of frames going through the internals of something external e.g. urllib, it lets you focus on your code.
 
     | Before | After |
     | --- | ---
@@ -218,7 +218,7 @@ Changelog
                           condense repeated calls
   ```
 
-- Because there are a few rendering options now, you can load a previous profiling session using `--load-prev` - pyinstrument keeps the last 10 sessions.
+- Because there are a few rendering options now, you can load a previous profiling session using `--load-prev` - joulehunter keeps the last 10 sessions.
 
 - Hidden groups can also call back into application code, that looks like this:
 
@@ -257,32 +257,32 @@ Yikes! See #49 for the gory details. I hope you like it.
 
 ### v2.2.0
 
--   Added support for JSON output. Use `pyinstrument --renderer=json scriptfile.py`.
-    [PR](https://github.com/joerick/pyinstrument/pull/46)
+-   Added support for JSON output. Use `joulehunter --renderer=json scriptfile.py`.
+    [PR](https://github.com/joerick/joulehunter/pull/46)
 -   [@iddan](https://github.com/iddan) has put together an
     [interactive viewer](https://python-flame-chart.netlify.com/) using the JSON output!
 
     ![image](https://user-images.githubusercontent.com/1244307/44622790-3ca9a600-a8b8-11e8-8dc2-f33ce433c03d.png)
 
--   When running `pyinstrument --html` and you don't pipe the output to a file, pyinstrument will write the console output to a temp file and open that in a browser.
+-   When running `joulehunter --html` and you don't pipe the output to a file, joulehunter will write the console output to a temp file and open that in a browser.
 
 ### v2.1.0
 
--   Added support for running modules with pyinstrument via the command line. The new syntax
-    is the `-m` flag e.g. `pyinstrument -m module_name`! [PR](https://github.com/joerick/pyinstrument/pull/45#pullrequestreview-143383557)
+-   Added support for running modules with joulehunter via the command line. The new syntax
+    is the `-m` flag e.g. `joulehunter -m module_name`! [PR](https://github.com/joerick/joulehunter/pull/45#pullrequestreview-143383557)
 
 ### v2.0.4
 
--   Fix crashes due to multi-threaded use of pyinstrument. The fix is in the C extension,
-    over at https://github.com/joerick/pyinstrument_cext/pull/3
+-   Fix crashes due to multi-threaded use of joulehunter. The fix is in the C extension,
+    over at https://github.com/joerick/joulehunter_cext/pull/3
 
 ### v2.0.3
 
--   Pyinstrument can now be used in a `with` block.
+-   joulehunter can now be used in a `with` block.
 
     For example:
 
-		profiler = pyinstrument.Profiler()
+		profiler = joulehunter.Profiler()
 		with profiler:
 		    # do some work here...
 		print(profiler.output_text())
@@ -298,36 +298,36 @@ Yikes! See #49 for the gory details. I hope you like it.
 
 ### v2.0.0
 
--   **Pyinstrument uses a new profiling mode**. Rather than using
+-   **joulehunter uses a new profiling mode**. Rather than using
     signals, pyintrument uses a new statistical profiler built on
     PyEval_SetProfile. This means no more main thread restriction, no more
-    IO errors when using Pyinstrument, and no need for a separate more
+    IO errors when using joulehunter, and no need for a separate more
     'setprofile' mode!
 
--   **Renderers**. Users can customize Pyinstrument to use alternative renderers
+-   **Renderers**. Users can customize joulehunter to use alternative renderers
     with the `renderer` argument on `Profiler.output()`, or using the `--renderer`
     argument on the command line.
 
--   **Recorders**. To support other use cases of Pyinstrument (e.g. flame charts),
-    pyinstrument now has a 'timeline' recorder mode. This mode records captured
+-   **Recorders**. To support other use cases of joulehunter (e.g. flame charts),
+    joulehunter now has a 'timeline' recorder mode. This mode records captured
     frames in a linear way, so the program execution can be viewed on a
     timeline.
 
 ### v0.13
 
--   `pyinstrument` command. You can now profile python scripts from the shell
-    by running `$ pyinstrument script.py`. This is now equivalent to
-    `python -m pyinstrument`. Thanks @asmeurer!
+-   `joulehunter` command. You can now profile python scripts from the shell
+    by running `$ joulehunter script.py`. This is now equivalent to
+    `python -m joulehunter`. Thanks @asmeurer!
 
 ### v0.12
 
 -   Application code is highlighted in HTML traces to make it easier to spot
 
--   Added `PYINSTRUMENT_PROFILE_DIR` option to the Django interface, which
+-   Added `joulehunter_PROFILE_DIR` option to the Django interface, which
     will log profiles of all requests to a file the specified folder. Useful
     for profiling API calls.
 
--   Added `PYINSTRUMENT_USE_SIGNAL` option to the Django interface, for use
+-   Added `joulehunter_USE_SIGNAL` option to the Django interface, for use
     when signal mode presents problems.
 
 Contributing
@@ -341,7 +341,7 @@ To setup a dev environment:
 
 To get some sample output:
 
-    pyinstrument examples/wikipedia_article_word_count.py
+    joulehunter examples/wikipedia_article_word_count.py
 
 To run the tests:
 
@@ -362,6 +362,6 @@ To edit the html renderer style, do:
 When launched without a top-level `window.profileSession` object, it will
 fetch a sample profile so you can work with it.
 
-To compile the JS app and bundle it back into the pyinstrument python tool:
+To compile the JS app and bundle it back into the joulehunter python tool:
 
     bin/build_js_bundle.py [--force]

@@ -11,28 +11,28 @@ import sys
 import time
 from typing import Any, List, Type, cast
 
-import pyinstrument
-import pyinstrument.energy as energy
-from pyinstrument import Profiler, renderers
-from pyinstrument.frame import BaseFrame
-from pyinstrument.processors import ProcessorOptions
-from pyinstrument.renderers.html import HTMLRenderer
-from pyinstrument.session import Session
-from pyinstrument.util import (
+import joulehunter
+import joulehunter.energy as energy
+from joulehunter import Profiler, renderers
+from joulehunter.frame import BaseFrame
+from joulehunter.processors import ProcessorOptions
+from joulehunter.renderers.html import HTMLRenderer
+from joulehunter.session import Session
+from joulehunter.util import (
     file_is_a_tty,
     file_supports_color,
     file_supports_unicode,
     object_with_import_path,
 )
-from pyinstrument.vendor import appdirs
+from joulehunter.vendor import appdirs
 
 # pyright: strict
 
 
 def main():
-    usage = "usage: pyinstrument [options] scriptfile [arg] ..."
-    version_string = "pyinstrument {v}, on Python {pyv[0]}.{pyv[1]}.{pyv[2]}".format(
-        v=pyinstrument.__version__,
+    usage = "usage: joulehunter [options] scriptfile [arg] ..."
+    version_string = "joulehunter {v}, on Python {pyv[0]}.{pyv[1]}.{pyv[2]}".format(
+        v=joulehunter.__version__,
         pyv=sys.version_info,
     )
     parser = optparse.OptionParser(usage=usage, version=version_string)
@@ -355,7 +355,7 @@ def main():
     renderer = renderer_class(**renderer_kwargs)
 
     # remove this frame from the trace
-    renderer.processors.append(remove_first_pyinstrument_frame_processor)
+    renderer.processors.append(remove_first_joulehunter_frame_processor)
 
     if isinstance(renderer, HTMLRenderer) and not options.outfile and file_is_a_tty(f):
         # don't write HTML to a TTY, open in browser instead
@@ -369,7 +369,7 @@ def main():
     if options.renderer == "text":
         _, report_identifier = save_report(session)
         print("To view this report with different options, run:")
-        print("    pyinstrument --load-prev %s [options]" % report_identifier)
+        print("    joulehunter --load-prev %s [options]" % report_identifier)
         print("")
 
 
@@ -385,7 +385,7 @@ def get_renderer_class(renderer: str) -> Type[renderers.Renderer]:
 
 
 def report_dir() -> str:
-    data_dir: str = appdirs.user_data_dir("pyinstrument", "com.github.joerick")  # type: ignore
+    data_dir: str = appdirs.user_data_dir("joulehunter", "com.github.joerick")  # type: ignore
     report_dir = os.path.join(data_dir, "reports")
     if not os.path.exists(report_dir):
         os.makedirs(report_dir)
@@ -420,7 +420,7 @@ def save_report(session: Session):
 
 
 # pylint: disable=W0613
-def remove_first_pyinstrument_frame_processor(
+def remove_first_joulehunter_frame_processor(
     frame: BaseFrame | None, options: ProcessorOptions
 ) -> BaseFrame | None:
     """
@@ -433,7 +433,7 @@ def remove_first_pyinstrument_frame_processor(
     if frame.file_path is None:
         return frame
 
-    if "pyinstrument" in frame.file_path and len(frame.children) == 1:
+    if "joulehunter" in frame.file_path and len(frame.children) == 1:
         frame = frame.children[0]
         frame.remove_from_parent()
         return frame

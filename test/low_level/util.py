@@ -2,8 +2,8 @@ import functools
 
 import pytest
 
-from pyinstrument.low_level.stat_profile import setstatprofile as setstatprofile_c
-from pyinstrument.low_level.stat_profile_python import setstatprofile as setstatprofile_python
+from joulehunter.low_level.stat_profile import setstatprofile as setstatprofile_c
+from joulehunter.low_level.stat_profile_python import setstatprofile as setstatprofile_python
 
 """
 Parametrizes the test with both the C and Python setstatprofile, just to check

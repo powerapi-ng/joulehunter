@@ -14,14 +14,14 @@ end-before: '<!-- MARK installation end -->'
 
 ### Profile a Python script
 
-Call Pyinstrument directly from the command line. Instead of writing
-`python script.py`, type `pyinstrument script.py`. Your script will run as
-normal, and at the end (or when you press `^C`), Pyinstrument will output a
+Call joulehunter directly from the command line. Instead of writing
+`python script.py`, type `joulehunter script.py`. Your script will run as
+normal, and at the end (or when you press `^C`), joulehunter will output a
 colored summary showing where most of the time was spent.
 
 Here are the options you can use:
 
-    Usage: pyinstrument [options] scriptfile [arg] ...
+    Usage: joulehunter [options] scriptfile [arg] ...
 
     Options:
       --version             show program's version number and exit
@@ -60,11 +60,11 @@ can really explore this way!
 
 ### Profile a specific chunk of code
 
-Pyinstrument also has a Python API. Just surround your code with Pyinstrument,
+joulehunter also has a Python API. Just surround your code with joulehunter,
 like this:
 
 ```python
-from pyinstrument import Profiler
+from joulehunter import Profiler
 
 profiler = Profiler()
 profiler.start()
@@ -89,37 +89,37 @@ Experiment with the interval value to see different depths, but keep in mind
 that smaller intervals could affect the performance overhead of profiling.
 
 **Protip:** To explore the profile in a web browser, use
-{meth}`profiler.open_in_browser() <pyinstrument.Profiler.open_in_browser>`. To
+{meth}`profiler.open_in_browser() <joulehunter.Profiler.open_in_browser>`. To
 save this HTML for later, use
-{meth}`profiler.output_html() <pyinstrument.Profiler.output_html>`.
+{meth}`profiler.output_html() <joulehunter.Profiler.output_html>`.
 
 ### Profile a web request in Django
 
 To profile Django web requests, add
-`pyinstrument.middleware.ProfilerMiddleware` to `MIDDLEWARE_CLASSES` in your
+`joulehunter.middleware.ProfilerMiddleware` to `MIDDLEWARE_CLASSES` in your
 `settings.py`.
 
 Once installed, add `?profile` to the end of a request URL to activate the
 profiler. Your request will run as normal, but instead of getting the response,
-you'll get pyinstrument's analysis of the request in a web page.
+you'll get joulehunter's analysis of the request in a web page.
 
 If you're writing an API, it's not easy to change the URL when you want to
-profile something. In this case, add  `PYINSTRUMENT_PROFILE_DIR = 'profiles'`
-to your `settings.py`. Pyinstrument will profile every request and save the
+profile something. In this case, add  `joulehunter_PROFILE_DIR = 'profiles'`
+to your `settings.py`. joulehunter will profile every request and save the
 HTML output to the folder `profiles` in your working directory.
 
 If you want to show the profiling page depending on the request you can define
-`PYINSTRUMENT_SHOW_CALLBACK` as dotted path to a function used for determining
+`joulehunter_SHOW_CALLBACK` as dotted path to a function used for determining
 whether the page should show or not.
 You can provide your own function callback(request) which returns True or False
 in your settings.py.
 
 ```python
-def custom_show_pyinstrument(request):
+def custom_show_joulehunter(request):
     return request.user.is_superuser
 
 
-PYINSTRUMENT_SHOW_CALLBACK = "%s.custom_show_pyinstrument" % __name__
+joulehunter_SHOW_CALLBACK = "%s.custom_show_joulehunter" % __name__
 ```
 
 ### Profile a web request in Flask
@@ -152,5 +152,5 @@ creates the html output and returns that instead of the actual response.
 
 ### Profile something else?
 
-I'd love to have more ways to profile using Pyinstrument - e.g. other
+I'd love to have more ways to profile using joulehunter - e.g. other
 web frameworks. PRs are encouraged!

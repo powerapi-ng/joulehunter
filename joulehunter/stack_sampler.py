@@ -6,8 +6,8 @@ import types
 from contextvars import ContextVar
 from typing import Any, Callable, List, NamedTuple, Optional
 
-from pyinstrument.low_level.stat_profile import setstatprofile
-from pyinstrument.typing import LiteralStr
+from joulehunter.low_level.stat_profile import setstatprofile
+from joulehunter.typing import LiteralStr
 
 # pyright: strict
 

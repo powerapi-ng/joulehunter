@@ -5,7 +5,7 @@ import sys
 import warnings
 from typing import IO
 
-from pyinstrument.vendor.decorator import decorator
+from joulehunter.vendor.decorator import decorator
 
 
 def object_with_import_path(import_path):

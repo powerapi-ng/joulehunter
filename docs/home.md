@@ -4,7 +4,7 @@ html_meta:
 hide-toc:
 ---
 
-# pyinstrument
+# joulehunter
 
 ```{include} ../README.md
 ---

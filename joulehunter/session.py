@@ -4,14 +4,14 @@ import json
 from collections import deque
 from typing import Any, List, Tuple, cast
 
-from pyinstrument.frame import BaseFrame, DummyFrame, Frame, SelfTimeFrame
-from pyinstrument.typing import PathOrStr
+from joulehunter.frame import BaseFrame, DummyFrame, Frame, SelfTimeFrame
+from joulehunter.typing import PathOrStr
 
 # pyright: strict
 
 
 ASSERTION_MESSAGE = (
-    "Please raise an issue at https://github.com/joerick/pyinstrument/issues and "
+    "Please raise an issue at https://github.com/akaminetzkyp/joulehunter/issues and "
     "let me know how you caused this error!"
 )
 

@@ -2,25 +2,25 @@
 
 ## Command line interface
 
-``pyinstrument`` works just like ``python``, on the command line, so you can
-call your scripts like ``pyinstrument script.py`` or ``pyinstrument -m
+``joulehunter`` works just like ``python``, on the command line, so you can
+call your scripts like ``joulehunter script.py`` or ``joulehunter -m
 my_module``.
 
-When your script ends, or when you kill it with `ctrl-c`, pyinstrument will
+When your script ends, or when you kill it with `ctrl-c`, joulehunter will
 print a profile report to the console.
 
-```{program-output} pyinstrument --help
+```{program-output} joulehunter --help
 ```
 
 ## Python API
 
-The Python API is also available, for calling pyinstrument directly from
+The Python API is also available, for calling joulehunter directly from
 Python and writing integrations with with other tools.
 
 ### The Profiler object
 
 ```{eval-rst}
-.. autoclass:: pyinstrument.Profiler
+.. autoclass:: joulehunter.Profiler
     :members:
     :special-members: __enter__
 ```
@@ -28,7 +28,7 @@ Python and writing integrations with with other tools.
 ### Sessions
 
 ```{eval-rst}
-.. autoclass:: pyinstrument.session.Session
+.. autoclass:: joulehunter.session.Session
     :members:
 ```
 
@@ -44,20 +44,20 @@ Rendering has two steps:
 Therefore, rendering can be customised by changing the ``processors`` property. For example, you can disable time-aggregation (making the profile into a timeline) by removing {func}`aggregate_repeated_calls`.
 
 ```{eval-rst}
-.. autoclass:: pyinstrument.renderers.Renderer
+.. autoclass:: joulehunter.renderers.Renderer
     :members:
 
-.. autoclass:: pyinstrument.renderers.ConsoleRenderer
+.. autoclass:: joulehunter.renderers.ConsoleRenderer
 
-.. autoclass:: pyinstrument.renderers.HTMLRenderer
+.. autoclass:: joulehunter.renderers.HTMLRenderer
 
-.. autoclass:: pyinstrument.renderers.JSONRenderer
+.. autoclass:: joulehunter.renderers.JSONRenderer
 ```
 
 ### Processors
 
 ```{eval-rst}
-.. automodule:: pyinstrument.processors
+.. automodule:: joulehunter.processors
     :members:
 ```
 

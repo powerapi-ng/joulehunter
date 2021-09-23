@@ -1,9 +1,9 @@
 How it works
 ============
 
-Pyinstrument interrupts the program every 1ms[^interval] and records the entire stack at
+joulehunter interrupts the program every 1ms[^interval] and records the entire stack at
 that point. It does this using a C extension and `PyEval_SetProfile`, but only
-taking readings every 1ms. Check out [this blog post](http://joerick.me/posts/2017/12/15/pyinstrument-20/) for more info.
+taking readings every 1ms. Check out [this blog post](http://joerick.me/posts/2017/12/15/joulehunter-20/) for more info.
 
 [^interval]: Or, your configured ``interval``.
 
@@ -15,7 +15,7 @@ samples were 'bunched up' and recorded at the end.
 
 ## Statistical profiling (not tracing)
 
-Pyinstrument is a statistical profiler - it doesn't track every
+joulehunter is a statistical profiler - it doesn't track every
 function call that your program makes. Instead, it's recording the call stack
 every 1ms.
 
@@ -26,7 +26,7 @@ profilers are much lower-overhead than tracing profilers.
 | -------------|:---------------------------------------------------|---------:
 | Base         | `████████████████                       `  0.33s   |
 |              |                                                    |
-| pyinstrument | `████████████████████                   `  0.43s   |      30%
+| joulehunter | `████████████████████                   `  0.43s   |      30%
 | cProfile     | `█████████████████████████████          `  0.61s   |      84%
 | profile      | `██████████████████████████████████...██`  6.79s   |    2057%
 
@@ -71,7 +71,7 @@ slow. If I use cProfile, I might get this:
 
 It's often hard to understand how your own code relates to these traces.
 
-Pyinstrument records the entire stack, so tracking expensive calls is much
+joulehunter records the entire stack, so tracking expensive calls is much
 easier. It also hides library frames by default, letting you focus on your
 app/module is affecting performance.
 
@@ -92,9 +92,9 @@ Program: examples/django_example/manage.py runserver --nothreading --noreload
 
 ## 'Wall-clock' time (not CPU time)
 
-Pyinstrument records duration using 'wall-clock' time. When you're writing a
+joulehunter records duration using 'wall-clock' time. When you're writing a
 program that downloads data, reads files, and talks to databases, all that
-time is *included* in the tracked time by pyinstrument.
+time is *included* in the tracked time by joulehunter.
 
 That's really important when debugging performance problems, since Python is
 often used as a 'glue' language between other services. The problem might not
@@ -102,15 +102,15 @@ be in your program, but you should still be able to find why it's slow.
 
 ## Async profiling
 
-pyinstrument can profile async programs that use `async` and `await`. This
+joulehunter can profile async programs that use `async` and `await`. This
 async support works by tracking the 'context' of execution, as provided by the
 built-in [contextvars] module.
 
 [contextvars]: https://docs.python.org/3/library/contextvars.html
 
-When you start a Profiler with the {py:attr}`async_mode <pyinstrument.Profiler.async_mode>` `enabled` or `strict` (not `disabled`), that Profiler is attached to the current async context.
+When you start a Profiler with the {py:attr}`async_mode <joulehunter.Profiler.async_mode>` `enabled` or `strict` (not `disabled`), that Profiler is attached to the current async context.
 
-When profiling, pyinstrument keeps an eye on the context. When execution exits
+When profiling, joulehunter keeps an eye on the context. When execution exits
 the context, it captures the `await` stack that caused the context to exit.
 Any time spent outside the context is attributed to the that halted execution
 of the `await`.
@@ -122,7 +122,7 @@ also profiled.
 
 ![Async context inheritance](img/async-context.svg)
 
-pyinstrument supports async mode with Asyncio and Trio, other `async`/`await`
+joulehunter supports async mode with Asyncio and Trio, other `async`/`await`
 frameworks should work as long as they use [contextvars].
 
 [Greenlet] doesn't use `async` and `await`, and alters the Python stack during

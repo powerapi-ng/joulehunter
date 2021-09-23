@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = "pyinstrument"
+project = "joulehunter"
 copyright = "2021, Joe Rickerby"
 author = "Joe Rickerby"
 

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Any, List
 
-from pyinstrument import processors
-from pyinstrument.frame import BaseFrame
-from pyinstrument.session import Session
+from joulehunter import processors
+from joulehunter.frame import BaseFrame
+from joulehunter.session import Session
 
 # pyright: strict
 
@@ -36,7 +36,7 @@ class Renderer:
         processor_options: dict[str, Any] | None = None,
     ):
         """
-        :param show_all: Don't hide library frames - show everything that pyinstrument captures.
+        :param show_all: Don't hide library frames - show everything that joulehunter captures.
         :param timeline: Instead of aggregating time, leave the samples in chronological order.
         :param processor_options: A dictionary of processor options.
         """

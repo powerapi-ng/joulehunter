@@ -1,4 +1,4 @@
-from pyinstrument import Profiler
+from joulehunter import Profiler
 
 p = Profiler(use_signal=False)
 
