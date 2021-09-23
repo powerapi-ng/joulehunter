@@ -50,20 +50,15 @@ class ConsoleRenderer(Renderer):
             r"",
             r"   . _     / _  /_    _ _/_ _  _  ",
             r"  / /_//_// /_'/ //_// //  /_'/   ",
-            r"|/          {:>20}".format("v" + joulehunter.__version__),
+            r"|/                                ",
         ]
 
-        lines[1] += " Recorded: {:<9}".format(
-            time.strftime("%X", time.localtime(session.start_time))
-        )
-        lines[2] += f" Duration: {session.duration:<9.3f}"
-        lines[1] += f" Samples:  {session.sample_count}"
-        if session.cpu_time is not None:
-            lines[2] += f" CPU time: {session.cpu_time:.3f}"
-
-        lines.append("")
-        lines.append(f"Program: {session.program}")
-        lines.append(f"Domain:  {' -> '.join(session.domain_name)}")
+        lines[1] += f"Duration: {session.duration:<12.3f}"
+        lines[1] += f"Samples:   {session.sample_count}"
+        lines[2] += f"Package:  {session.domain_name[0]:<12}"
+        if len(session.domain_name) == 2:
+            lines[2] += f"Component: {session.domain_name[1]}"
+        lines[3] += f"Program:  {session.program}"
         lines.append("")
         lines.append("")
 
