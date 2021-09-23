@@ -68,6 +68,13 @@ class JSONRenderer(Renderer):
             property_decls.append('"cpu_time": null')
         else:
             property_decls.append('"cpu_time": %f' % session.cpu_time)
+        property_decls.append(
+            '"package": %s' % encode_str(session.domain_name[0]))
+        if len(session.domain_name) == 2:
+            property_decls.append(
+                '"component": %s' % encode_str(session.domain_name[1]))
+        else:
+            property_decls.append('"component": null')
         property_decls.append('"root_frame": %s' % self.render_frame(frame))
 
         return "{%s}\n" % ",".join(property_decls)

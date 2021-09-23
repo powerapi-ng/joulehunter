@@ -4,14 +4,14 @@
       <div class="row">
         <div class="title">joulehunter</div>
         <div class="metrics">
-          <div class="metric-label">Recorded:</div>
-          <div class="metric-value">{{startTime}}</div>
           <div class="metric-label">Duration:</div>
           <div class="metric-value">{{duration}} seconds</div>
           <div class="metric-label">Samples:</div>
           <div class="metric-value">{{session.sample_count}}</div>
-          <div class="metric-label">CPU time:</div>
-          <div class="metric-value">{{cpuTime}} seconds</div>
+          <div class="metric-label">Package:</div>
+          <div class="metric-value">{{session.package}}</div>
+          <div class="metric-label" v-if="session.component">Component:</div>
+          <div class="metric-value" v-if="session.component">{{session.component}}</div>
         </div>
       </div>
     </div>
@@ -22,13 +22,6 @@ export default {
   name: 'Header',
   props: ['session'],
   computed: {
-    startTime() {
-      const date = new Date(this.session.start_time*1000);
-      return date.toLocaleString()
-    },
-    cpuTime() {
-      return this.session.cpu_time.toLocaleString(undefined, {maximumSignificantDigits: 3})
-    },
     duration() {
       return this.session.duration.toLocaleString(undefined, {maximumSignificantDigits: 3})
     }
