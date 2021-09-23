@@ -385,7 +385,7 @@ def get_renderer_class(renderer: str) -> Type[renderers.Renderer]:
 
 
 def report_dir() -> str:
-    data_dir: str = appdirs.user_data_dir("joulehunter", "com.github.joerick")  # type: ignore
+    data_dir: str = appdirs.user_data_dir("joulehunter", "com.github.akaminetzkyp")  # type: ignore
     report_dir = os.path.join(data_dir, "reports")
     if not os.path.exists(report_dir):
         os.makedirs(report_dir)

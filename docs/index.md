@@ -10,7 +10,7 @@ Home <home.md>
 guide.md
 how-it-works.md
 reference.md
-GitHub <https://github.com/joerick/joulehunter>
+GitHub <https://github.com/akaminetzkyp/joulehunter>
 ```
 
 Indices and tables

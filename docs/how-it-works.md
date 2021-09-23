@@ -3,7 +3,7 @@ How it works
 
 joulehunter interrupts the program every 1ms[^interval] and records the entire stack at
 that point. It does this using a C extension and `PyEval_SetProfile`, but only
-taking readings every 1ms. Check out [this blog post](http://joerick.me/posts/2017/12/15/joulehunter-20/) for more info.
+taking readings every 1ms. Check out [this blog post](http://joerick.me/posts/2017/12/15/pyinstrument-20/) for more info.
 
 [^interval]: Or, your configured ``interval``.
 
