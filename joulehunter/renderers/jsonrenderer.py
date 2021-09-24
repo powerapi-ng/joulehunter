@@ -64,10 +64,6 @@ class JSONRenderer(Renderer):
         property_decls.append('"duration": %f' % session.duration)
         property_decls.append('"sample_count": %d' % session.sample_count)
         property_decls.append('"program": %s' % encode_str(session.program))
-        if session.cpu_time is None:
-            property_decls.append('"cpu_time": null')
-        else:
-            property_decls.append('"cpu_time": %f' % session.cpu_time)
         property_decls.append(
             '"package": %s' % encode_str(session.domain_name[0]))
         if len(session.domain_name) == 2:
