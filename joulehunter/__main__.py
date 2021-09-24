@@ -213,12 +213,12 @@ def main():
     )
 
     parser.add_option(
-        "-s",
-        "--scope",
-        dest="scope",
+        "-c",
+        "--component",
+        dest="component",
         action="store",
-        help="select the scope to analyze (by ID or name - if not specified, "
-             "the package will be selected)",
+        help="select the component to analyze (by ID or name - if not "
+             "specified, the entire package will be selected)",
     )
 
     if not sys.argv[1:]:
@@ -242,11 +242,11 @@ def main():
 
     domain = [f'intel-rapl:{options.package}']
 
-    if options.scope:
-        if not options.scope.isnumeric():
-            options.scope = energy.scope_name_to_num(available_domains,
-                                                     options.scope)
-        domain.append(f'intel-rapl:{options.package}:{options.scope}')
+    if options.component:
+        if not options.component.isnumeric():
+            options.component = energy.component_name_to_num(
+                available_domains, options.component)
+        domain.append(f'intel-rapl:{options.package}:{options.component}')
 
     if args == [] and options.module_name is None and options.load_prev is None:
         parser.print_help()

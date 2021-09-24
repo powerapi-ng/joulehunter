@@ -15,12 +15,12 @@ def available_domains() -> list[dict[str, Any]]:
     packages = [
         {"dirname": dirname,
          "name": domain_name([dirname]),
-         "scopes": []}
+         "components": []}
         for dirname in sorted(os.listdir(RAPL_API_DIR))
         if dirname.startswith("intel-rapl")]
 
     for package in packages:
-        package["scopes"] = [
+        package["components"] = [
             {"dirname": dirname,
              "name": domain_name([package["dirname"], dirname])}
             for dirname
@@ -40,8 +40,8 @@ def stringify_domains(domains: list[dict[str, Any]]) -> str:
     text = ""
     for package_num, package in enumerate(domains):
         text += f"[{package_num}] {package['name']}\n"
-        for scope_num, scope in enumerate(package["scopes"]):
-            text += f"  [{scope_num}] {scope['name']}\n"
+        for component_num, component in enumerate(package["components"]):
+            text += f"  [{component_num}] {component['name']}\n"
     text = text[:-1]
     return text
 
@@ -53,12 +53,12 @@ def package_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
     raise RuntimeError("Package not found")
 
 
-def scope_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
+def component_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
     for package in domains:
-        for scope in package["scopes"]:
-            if scope['name'] == name:
-                return scope['dirname'].split(':')[-1]
-    raise RuntimeError("Scope not found")
+        for component in package["components"]:
+            if component['name'] == name:
+                return component['dirname'].split(':')[-1]
+    raise RuntimeError("component not found")
 
 
 def dirnames_to_names(domains: list[dict[str, Any]],
@@ -68,9 +68,9 @@ def dirnames_to_names(domains: list[dict[str, Any]],
         for package in domains:
             if package['dirname'] == dirname:
                 names.append(package['name'])
-            for scope in package["scopes"]:
-                if scope['dirname'] == dirname:
-                    names.append(scope['name'])
+            for component in package["components"]:
+                if component['dirname'] == dirname:
+                    names.append(component['name'])
     return names
 
 
