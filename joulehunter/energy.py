@@ -75,7 +75,7 @@ def dirnames_to_names(domains: list[dict[str, Any]],
 
 
 class Energy:
-    def __init__(self, dirnames):
+    def __init__(self, dirnames: list[str]) -> None:
         self.generator = Energy.current_energy_generator(dirnames)
 
     @staticmethod
