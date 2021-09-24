@@ -4,7 +4,6 @@ import inspect
 import sys
 import time
 import types
-from time import process_time
 from typing import IO, Any
 
 from joulehunter import renderers
@@ -24,11 +23,9 @@ class ActiveProfilerSession:
     def __init__(
         self,
         start_time: float,
-        start_process_time: float,
         start_call_stack: list[str],
     ) -> None:
         self.start_time = start_time
-        self.start_process_time = start_process_time
         self.start_call_stack = start_call_stack
         self.frame_records = []
 
@@ -131,7 +128,6 @@ class Profiler:
         try:
             self._active_session = ActiveProfilerSession(
                 start_time=time.time(),
-                start_process_time=process_time(),
                 start_call_stack=build_call_stack(caller_frame, "initial", None),
             )
 
