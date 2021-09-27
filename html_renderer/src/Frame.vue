@@ -13,7 +13,7 @@
       </div>
       <div class="time"
            :style="timeStyle">
-        {{formattedTime}} J
+        {{formattedTime}} J [{{proportionOfTotal}}%]
       </div>
       <div class="name">{{frame.function}}</div>
       <div class="spacer" style="flex: 1"></div>
@@ -95,6 +95,11 @@ export default {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3,
       })
+    },
+    proportionOfTotal() {
+      return (100*this.frame.proportionOfTotal).toLocaleString(
+        undefined, {maximumSignificantDigits: 3}
+      )
     },
     groupLibrarySummary() {
       if (!this.frame.group) {
