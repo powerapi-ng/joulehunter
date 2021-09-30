@@ -10,7 +10,7 @@ Home <home.md>
 guide.md
 how-it-works.md
 reference.md
-GitHub <https://github.com/akaminetzkyp/joulehunter>
+GitHub <https://github.com/powerapi-ng/joulehunter>
 ```
 
 Indices and tables

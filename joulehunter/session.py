@@ -11,7 +11,7 @@ from joulehunter.typing import PathOrStr
 
 
 ASSERTION_MESSAGE = (
-    "Please raise an issue at https://github.com/akaminetzkyp/joulehunter/issues and "
+    "Please raise an issue at https://github.com/powerapi-ng/joulehunter/issues and "
     "let me know how you caused this error!"
 )
 

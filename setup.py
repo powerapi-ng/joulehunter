@@ -23,7 +23,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Joe Rickerby",
     author_email="joerick@mac.com",
-    url="https://github.com/akaminetzkyp/joulehunter",
+    url="https://github.com/powerapi-ng/joulehunter",
     keywords=["profiling", "profile", "profiler", "cpu", "time", "sampling"],
     install_requires=[],
     include_package_data=True,
