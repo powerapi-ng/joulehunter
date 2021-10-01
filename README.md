@@ -7,6 +7,11 @@ Joulehunter helps you find what part of your code is consuming considerable amou
 
 This repo is still a work in progress. 😄
 
+Compatibility
+------------
+
+Joulehunter runs on Linux machines with Intel RAPL support. This technology has been available since the Sandy Bridge generation.
+
 Installation
 ------------
 
