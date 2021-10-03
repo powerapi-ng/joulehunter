@@ -1,9 +1,9 @@
 name: Publish JouleHunter to PyPI and TestPyPI
 
 on:
-    push:
-        branches: [main]
-
+    release:
+        types: [published]
+        
 jobs:
     build_sdist:
         name: Build source distribution
@@ -23,7 +23,9 @@ jobs:
               with:
                   path: dist/*.tar.gz
     publish:
-        name: Build and publish Publish JouleHunter to TestPyPI
+    
+        publish:
+        name: Build and publish Publish JouleHunter to PyPI 
         runs-on: ubuntu-latest
         needs: [build_sdist]
         steps:
@@ -32,8 +34,7 @@ jobs:
                   name: artifact
                   path: dist
 
-            - name: Publish distribution 📦 to Test PyPI
-              uses: pypa/gh-action-pypi-publish@master
-              with:
-                  password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-                  repository_url: https://test.pypi.org/legacy/
+        - name: Publish distribution 📦 to PyPI
+          uses: pypa/gh-action-pypi-publish@master
+          with:
+              password: ${{ secrets.PYPI_API_TOKEN }}
