@@ -1,7 +1,5 @@
-import time
 from typing import Any
 
-import joulehunter
 from joulehunter import processors
 from joulehunter.frame import BaseFrame
 from joulehunter.renderers.base import ProcessorList, Renderer
@@ -48,7 +46,7 @@ class ConsoleRenderer(Renderer):
     def render_preamble(self, session: Session):
         c = self.colors
         lines = [
-            f"",
+            "",
             f"{c.bold}{c.cyan}   . _     / _  /_    _ _/_ _  _  {c.end}{c.end}",
             f"{c.bold}{c.cyan}  / /_//_// /_'/ //_// //  /_'/   {c.end}{c.end}",
             f"{c.bold}{c.cyan}|/                                {c.end}{c.end}",

@@ -2,7 +2,7 @@ import contextvars
 import sys
 import timeit
 import types
-from typing import Any, Callable, List, Optional, Type
+from typing import Any, List
 
 
 class PythonStatProfiler:

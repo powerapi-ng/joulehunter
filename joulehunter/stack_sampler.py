@@ -14,7 +14,8 @@ from joulehunter.typing import LiteralStr
 
 thread_locals = threading.local()
 
-StackSamplerSubscriberTarget = Callable[[List[str], float, Optional["AsyncState"]], None]
+StackSamplerSubscriberTarget = Callable[[
+    List[str], float, Optional["AsyncState"]], None]
 
 
 class StackSamplerSubscriber:
@@ -69,14 +70,16 @@ class StackSampler:
                 target=target,
                 desired_interval=desired_interval,
                 bound_to_async_context=use_async_context,
-                async_state=AsyncState("in_context") if use_async_context else None,
+                async_state=AsyncState(
+                    "in_context") if use_async_context else None,
             )
         )
         self._update()
 
     def unsubscribe(self, target: StackSamplerSubscriberTarget):
         try:
-            subscriber = next(s for s in self.subscribers if s.target == target)  # type: ignore
+            subscriber = next(
+                s for s in self.subscribers if s.target == target)  # type: ignore
         except StopIteration:
             raise StackSampler.SubscriberNotFound()
 
@@ -94,7 +97,8 @@ class StackSampler:
             self._stop_sampling()
             return
 
-        min_subscribers_interval = min(s.desired_interval for s in self.subscribers)
+        min_subscribers_interval = min(
+            s.desired_interval for s in self.subscribers)
 
         if self.current_sampling_interval != min_subscribers_interval:
             self._start_sampling(interval=min_subscribers_interval)
@@ -103,7 +107,8 @@ class StackSampler:
         self.current_sampling_interval = interval
         if self.last_profile_time == 0.0:
             self.last_profile_time = self._timer()
-        setstatprofile(self._sample, interval, active_profiler_context_var, self.timer_func)
+        setstatprofile(self._sample, interval,
+                       active_profiler_context_var, self.timer_func)
 
     def _stop_sampling(self):
         setstatprofile(None)
@@ -137,7 +142,8 @@ class StackSampler:
             call_stack = build_call_stack(frame, event, arg)
 
             for subscriber in self.subscribers:
-                subscriber.target(call_stack, time_since_last_sample, subscriber.async_state)
+                subscriber.target(
+                    call_stack, time_since_last_sample, subscriber.async_state)
 
             self.last_profile_time = now
 
@@ -187,7 +193,8 @@ def build_call_stack(frame: types.FrameType | None, event: str, arg: Any) -> lis
         frame = frame.f_back
 
     thread = threading.current_thread()
-    thread_identifier = "%s\x00%s\x00%i" % (thread.name, "<thread>", thread.ident)
+    thread_identifier = "%s\x00%s\x00%i" % (
+        thread.name, "<thread>", thread.ident)
     call_stack.append(thread_identifier)
 
     # we iterated from the leaf to the root, we actually want the call stack
@@ -198,7 +205,9 @@ def build_call_stack(frame: types.FrameType | None, event: str, arg: Any) -> lis
 
 
 class AsyncState(NamedTuple):
-    state: LiteralStr["in_context", "out_of_context_awaited", "out_of_context_unknown"]
+
+    state: LiteralStr["in_context",
+                      "out_of_context_awaited", "out_of_context_unknown"]
     """
     Definitions:
       ``in_context``: indicates that the sample comes from the subscriber's

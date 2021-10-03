@@ -10,7 +10,8 @@ from joulehunter.vendor.decorator import decorator
 
 def object_with_import_path(import_path):
     if "." not in import_path:
-        raise ValueError("Can't import '%s', it is not a valid import path" % import_path)
+        raise ValueError(
+            "Can't import '%s', it is not a valid import path" % import_path)
     module_path, object_name = import_path.rsplit(".", 1)
 
     module = importlib.import_module(module_path)
@@ -19,7 +20,7 @@ def object_with_import_path(import_path):
 
 def truncate(string: str, max_length: int):
     if len(string) > max_length:
-        return string[0 : max_length - 3] + "..."
+        return string[0: max_length - 3] + "..."
     return string
 
 
@@ -58,7 +59,8 @@ def file_supports_color(file_obj: IO) -> bool:
     https://github.com/django/django/blob/master/django/core/management/color.py
     """
     plat = sys.platform
-    supported_platform = plat != "Pocket PC" and (plat != "win32" or "ANSICON" in os.environ)
+    supported_platform = plat != "Pocket PC" and (
+        plat != "win32" or "ANSICON" in os.environ)
 
     is_a_tty = file_is_a_tty(file_obj)
 
