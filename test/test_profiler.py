@@ -14,8 +14,6 @@ from joulehunter.session import Session
 
 from .util import assert_never, busy_wait, flaky_in_ci
 
-# Utilities #
-
 
 def long_function_a():
     time.sleep(0.25)
@@ -45,13 +43,16 @@ def test_collapses_multiple_calls_by_default():
     print(text_output)
 
     # output should be something like:
-    # 1.500 test_collapses_multiple_calls_by_default  test/test_profiler.py:25
-    # |- 0.500 long_function_a  test/test_profiler.py:17
-    # |- 0.500 long_function_b  test/test_profiler.py:20
+    # 1.500 J [100.0%] test_collapses_multiple_calls_by_default  test/test_profiler.py:61
+    # |- 1.000 J [66.7%] long_function_b  test/test_profiler.py:54
+    # |  `- 1.000 J [66.7%] sleep  test/fake_time_util.py:19
+    # `- 0.500 J [33.3%] long_function_a  test/test_profiler.py:50
+    #   `- 0.500 J [33.3%] sleep  test/fake_time_util.py:19
 
-    assert text_output.count("1.500 test_collapses_multiple_calls_by_default") == 1
-    assert text_output.count("0.500 long_function_a") == 1
-    assert text_output.count("1.000 long_function_b") == 1
+    assert text_output.count(
+        "1.500 J [100.0%] test_collapses_multiple_calls_by_default") == 1
+    assert text_output.count("0.500 J [33.3%] long_function_a") == 1
+    assert text_output.count("1.000 J [66.7%] long_function_b") == 1
 
 
 def test_profiler_retains_multiple_calls():
@@ -97,7 +98,8 @@ def test_two_functions():
     assert frame.function == "test_two_functions"
     assert len(frame.children) == 2
 
-    frame_b, frame_a = sorted(frame.children, key=lambda f: f.time(), reverse=True)
+    frame_b, frame_a = sorted(
+        frame.children, key=lambda f: f.time(), reverse=True)
 
     assert frame_a.function == "long_function_a"
     assert frame_b.function == "long_function_b"
@@ -138,13 +140,13 @@ def test_json_output():
     assert len(root_frame["children"]) == 2
 
 
-def test_empty_profile():
+def test_empty_profile(monkeypatch):
     with Profiler() as profiler:
         pass
     profiler.output(renderer=renderers.ConsoleRenderer())
 
 
-@flaky_in_ci
+@ flaky_in_ci
 def test_state_management():
     profiler = Profiler()
 

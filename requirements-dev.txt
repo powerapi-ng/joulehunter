@@ -1,5 +1,6 @@
 -e .
 pytest
+pytest-mock
 flaky
 trio
 django  # used by middleware

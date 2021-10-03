@@ -270,7 +270,8 @@ def main():
         options.show_all,
     ]
     if show_options_used.count(True) > 1:
-        parser.error("You can only specify one of --show, --show-regex and --show-all")
+        parser.error(
+            "You can only specify one of --show, --show-regex and --show-all")
 
     if options.show_fnmatch is not None:
         options.show_regex = fnmatch.translate(options.show_fnmatch)
@@ -287,7 +288,8 @@ def main():
 
             sys.argv[:] = [options.module_name] + options.module_args
             code = "run_module(modname, run_name='__main__', alter_sys=True)"
-            globs = {"run_module": runpy.run_module, "modname": options.module_name}
+            globs = {"run_module": runpy.run_module,
+                     "modname": options.module_name}
         else:
             sys.argv[:] = args
             if options.from_path:
@@ -346,8 +348,10 @@ def main():
     if options.renderer == "text":
         unicode_override = options.unicode is not None
         color_override = options.color is not None
-        unicode: Any = options.unicode if unicode_override else file_supports_unicode(f)
-        color: Any = options.color if color_override else file_supports_color(f)
+        unicode: Any = options.unicode if unicode_override else file_supports_unicode(
+            f)
+        color: Any = options.color if color_override else file_supports_color(
+            f)
 
         renderer_kwargs.update({"unicode": unicode, "color": color})
 
@@ -360,7 +364,8 @@ def main():
     if isinstance(renderer, HTMLRenderer) and not options.outfile and file_is_a_tty(f):
         # don't write HTML to a TTY, open in browser instead
         output_filename = renderer.open_in_browser(session)
-        print("stdout is a terminal, so saved profile output to %s" % output_filename)
+        print("stdout is a terminal, so saved profile output to %s" %
+              output_filename)
     else:
         f.write(renderer.render(session))
         if should_close_f_after_writing:
@@ -385,7 +390,8 @@ def get_renderer_class(renderer: str) -> Type[renderers.Renderer]:
 
 
 def report_dir() -> str:
-    data_dir: str = appdirs.user_data_dir("joulehunter", "com.github.powerapi-ng")  # type: ignore
+    data_dir: str = appdirs.user_data_dir(
+        "joulehunter", "com.github.powerapi-ng")  # type: ignore
     report_dir = os.path.join(data_dir, "reports")
     if not os.path.exists(report_dir):
         os.makedirs(report_dir)
@@ -412,7 +418,8 @@ def save_report(session: Session):
         report_file = previous_reports.pop()
         os.remove(report_file)
 
-    identifier = time.strftime("%Y-%m-%dT%H-%M-%S", time.localtime(session.start_time))
+    identifier = time.strftime(
+        "%Y-%m-%dT%H-%M-%S", time.localtime(session.start_time))
 
     path = os.path.join(report_dir(), identifier + ".pyisession")
     session.save(path)

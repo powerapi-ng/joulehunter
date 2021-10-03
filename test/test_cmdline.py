@@ -38,6 +38,7 @@ print('os.getcwd()', os.getcwd(), file=sys.stderr)
 """.strip()
 
 
+@pytest.mark.skipif(sys.platform != "linux", reason="we can't get available domaines unless we are in linux, we plan to moke later")
 @pytest.mark.parametrize(
     "joulehunter_invocation",
     (["joulehunter"], [sys.executable, "-m", "joulehunter"]),
@@ -48,7 +49,8 @@ class TestCommandLine:
         busy_wait_py.write_text(BUSY_WAIT_SCRIPT)
 
         # need to wrap Paths with str() due to CPython bug 33617 (fixed in Python 3.8)
-        output = subprocess.check_output([*joulehunter_invocation, str(busy_wait_py)])
+        output = subprocess.check_output(
+            [*joulehunter_invocation, str(busy_wait_py)])
 
         assert "busy_wait" in str(output)
         assert "do_nothing" in str(output)

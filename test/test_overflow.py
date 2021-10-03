@@ -30,7 +30,8 @@ def current_stack_depth():
 # Fixtures
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture()
+# @pytest.mark.usefixtures('mock_profiler')
 def deep_profiler_session():
     profiler = Profiler()
     profiler.start()

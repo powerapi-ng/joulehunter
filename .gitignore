@@ -4,6 +4,7 @@ env2/
 env3*/
 .Python
 /env
+/venv
 
 # python
 *.pyc

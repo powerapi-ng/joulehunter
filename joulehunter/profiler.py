@@ -46,10 +46,10 @@ class Profiler:
     def __init__(
             self,
             interval: float = 0.001,
-            async_mode: AsyncMode = "enabled",
+            async_mode: AsyncMode = "disabled",
             domain=None,
             domain_name=None,
-            ):
+    ):
         """
         Note the profiling will not start until :func:`start` is called.
 
@@ -128,7 +128,8 @@ class Profiler:
         try:
             self._active_session = ActiveProfilerSession(
                 start_time=time.time(),
-                start_call_stack=build_call_stack(caller_frame, "initial", None),
+                start_call_stack=build_call_stack(
+                    caller_frame, "initial", None),
             )
 
             use_async_context = self.async_mode != "disabled"
@@ -250,7 +251,8 @@ class Profiler:
             )
         else:
             # regular sync code
-            self._active_session.frame_records.append((call_stack, time_since_last_sample))
+            self._active_session.frame_records.append(
+                (call_stack, time_since_last_sample))
 
     def print(
         self,
@@ -328,7 +330,8 @@ class Profiler:
 
     def _get_last_session_or_fail(self) -> Session:
         if self.is_running:
-            raise Exception("can't render profile output because this profiler is still running")
+            raise Exception(
+                "can't render profile output because this profiler is still running")
 
         if self.last_session is None:
             raise Exception(
