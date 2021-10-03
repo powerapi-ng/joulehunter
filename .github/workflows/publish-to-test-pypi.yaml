@@ -1,4 +1,4 @@
-name: Publish JouleHunter to PyPI and TestPyPI
+name: Publish JouleHunter to TestPyPI
 
 on:
     push:
