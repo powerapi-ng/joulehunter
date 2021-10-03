@@ -91,24 +91,24 @@ def user_data_dir(appname=None, appauthor=None, version=None, roaming=False):
     For Unix, we follow the XDG spec and support $XDG_DATA_HOME.
     That means, by default "~/.local/share/<AppName>".
     """
-    # if system == "win32":
-    #     if appauthor is None:
-    #         appauthor = appname
-    #     const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
-    #     path = os.path.normpath(_get_win_folder(const))
-    #     if appname:
-    #         if appauthor is not False:
-    #             path = os.path.join(path, appauthor, appname)
-    #         else:
-    #             path = os.path.join(path, appname)
-    # elif system == 'darwin':
-    #     path = os.path.expanduser('~/Library/Application Support/')
-    #     if appname:
-    #         path = os.path.join(path, appname)
-    # else:
-    path = os.getenv('XDG_DATA_HOME', os.path.expanduser("~/.local/share"))
-    if appname:
-        path = os.path.join(path, appname)
+    if system == "win32":
+        if appauthor is None:
+            appauthor = appname
+        const = roaming and "CSIDL_APPDATA" or "CSIDL_LOCAL_APPDATA"
+        path = os.path.normpath(_get_win_folder(const))
+        if appname:
+            if appauthor is not False:
+                path = os.path.join(path, appauthor, appname)
+            else:
+                path = os.path.join(path, appname)
+    elif system == 'darwin':
+        path = os.path.expanduser('~/Library/Application Support/')
+        if appname:
+            path = os.path.join(path, appname)
+    else:
+        path = os.getenv('XDG_DATA_HOME', os.path.expanduser("~/.local/share"))
+        if appname:
+            path = os.path.join(path, appname)
     if appname and version:
         path = os.path.join(path, version)
     return path
@@ -560,18 +560,18 @@ def _get_win_folder_with_jna(csidl_name):
     return dir
 
 
-# if system == "win32":
-#     try:
-#         from ctypes import windll
-#     except ImportError:
-#         try:
-#             import com.sun.jna
-#         except ImportError:
-#             _get_win_folder = _get_win_folder_from_registry
-#         else:
-#             _get_win_folder = _get_win_folder_with_jna
-#     else:
-#         _get_win_folder = _get_win_folder_with_ctypes
+if system == "win32":
+    try:
+        from ctypes import windll
+    except ImportError:
+        try:
+            import com.sun.jna
+        except ImportError:
+            _get_win_folder = _get_win_folder_from_registry
+        else:
+            _get_win_folder = _get_win_folder_with_jna
+    else:
+        _get_win_folder = _get_win_folder_with_ctypes
 
 
 # ---- self test code
