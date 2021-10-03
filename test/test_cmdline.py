@@ -38,7 +38,7 @@ print('os.getcwd()', os.getcwd(), file=sys.stderr)
 """.strip()
 
 
-@pytest.mark.skipif(sys.platform != "linux", reason="we can't get available domaines unless we are in linux, we plan to moke later")
+@pytest.mark.skip(reason="we can't get available domaines unless we are in linux, we plan to moke later")
 @pytest.mark.parametrize(
     "joulehunter_invocation",
     (["joulehunter"], [sys.executable, "-m", "joulehunter"]),
