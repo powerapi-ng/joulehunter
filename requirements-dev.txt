@@ -3,6 +3,7 @@ pytest
 pytest-mock
 flaky
 trio
+flake8
 django  # used by middleware
 sphinx==4.0.2
 myst-parser==0.15.1
