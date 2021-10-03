@@ -1,7 +1,7 @@
 import warnings
 
 
-__version__ = "4.0.3"
+__version__ = "1.0.0"
 
 # enable deprecation warnings
 warnings.filterwarnings("once", ".*", DeprecationWarning, r"joulehunter\..*")
