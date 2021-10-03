@@ -2,13 +2,11 @@ import distutils
 import os
 import subprocess
 import sys
-import joulehunter
 from setuptools import Extension, find_packages, setup
 
 setup(
     name="joulehunter",
     packages=find_packages(),
-    version=joulehunter.__version__,
     ext_modules=[
         Extension(
             "joulehunter.low_level.stat_profile",
