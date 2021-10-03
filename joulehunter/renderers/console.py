@@ -1,5 +1,5 @@
 from typing import Any
-
+import joulehunter
 from joulehunter import processors
 from joulehunter.frame import BaseFrame
 from joulehunter.renderers.base import ProcessorList, Renderer
