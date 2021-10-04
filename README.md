@@ -1,7 +1,7 @@
 joulehunter 
 =========== 
 [![Unit tests](https://github.com/powerapi-ng/joulehunter/actions/workflows/test.yaml/badge.svg)](https://github.com/powerapi-ng/joulehunter/actions/workflows/test.yaml)
-
+[![PyPI version](https://badge.fury.io/py/joulehunter.svg)](https://badge.fury.io/py/joulehunter)
 ![screenshot](https://user-images.githubusercontent.com/11022568/134655797-3872379e-0e4e-48d6-a771-6a94c756fa67.png)
 
 Joulehunter helps you find what part of your code is consuming considerable amounts of energy .
@@ -12,6 +12,7 @@ Compatibility
 ------------
 
 Joulehunter runs on **Linux** machines with **Intel RAPL** support. This technology has been available since the Sandy Bridge generation.
+
 
 Installation
 ------------
@@ -47,8 +48,12 @@ Executing ```joulehunter -l``` could output this:
 
 If we run ```joulehunter -p package-1 -c 2 my_file.py```, joulehunter will execute ```my_file.py``` and measure the energy consumption of package-1's DRAM.
 
+Requirements 
+-------------
+Sometimes when installing **joulehunter** pip can't build the .c modules, therefore you will have to install **python3-devel** to enable gcc to compile the .c modules 
+
 Read permission
-------------
+---------------
 
 Due to a [security vulnerability](https://platypusattack.com), only root has read permission for the energy files. In order to circumvent this, run the script as root or grant read permissions for the following files:
 
