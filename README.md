@@ -4,7 +4,7 @@ joulehunter
 
 ![screenshot](https://user-images.githubusercontent.com/11022568/134655797-3872379e-0e4e-48d6-a771-6a94c756fa67.png)
 
-Joulehunter helps you find what part of your code is consuming considerable amounts of energy .
+Joulehunter helps you find what part of your code is consuming considerable amounts of energy.
 
 This repo is still a work in progress. 😄
 
@@ -16,7 +16,13 @@ Joulehunter runs on **Linux** machines with **Intel RAPL** support. This technol
 Installation
 ------------
 
-    pip install joulehunter 
+You can install joulehunter with pip: ```pip install joulehunter```.
+
+You can also clone the repo and install it directly:
+
+     git clone https://github.com/powerapi-ng/joulehunter.git
+     cd joulehunter
+     python setup.py install
 
 Usage
 ------------
