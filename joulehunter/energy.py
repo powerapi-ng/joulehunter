@@ -74,6 +74,24 @@ def dirnames_to_names(domains: list[dict[str, Any]],
     return names
 
 
+def parse_domain(package, component):
+    available_domains_ = available_domains()
+
+    package = str(package)
+    if not package.isnumeric():
+        package = package_name_to_num(available_domains_, package)
+
+    domain = [f'intel-rapl:{package}']
+
+    if component:
+        component = str(component)
+        if not component.isnumeric():
+            component = component_name_to_num(available_domains_, component)
+        domain.append(f'intel-rapl:{package}:{component}')
+
+    return domain
+
+
 class Energy:
     def __init__(self, dirnames: list[str]) -> None:
         self.generator = Energy.current_energy_generator(dirnames)

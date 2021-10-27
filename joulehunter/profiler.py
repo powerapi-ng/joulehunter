@@ -4,10 +4,11 @@ import inspect
 import sys
 import time
 import types
-from typing import IO, Any
+from typing import IO, Any, Union
+
+import joulehunter.energy as energy
 
 from joulehunter import renderers
-from joulehunter.energy import Energy
 from joulehunter.frame import AWAIT_FRAME_IDENTIFIER, OUT_OF_CONTEXT_FRAME_IDENTIFIER
 from joulehunter.session import Session
 from joulehunter.stack_sampler import AsyncState, StackSampler, build_call_stack, get_stack_sampler
@@ -47,8 +48,8 @@ class Profiler:
             self,
             interval: float = 0.001,
             async_mode: AsyncMode = "disabled",
-            domain=None,
-            domain_name=None,
+            package: Union[str, int] = 0,
+            component: Union[str, int] = None
     ):
         """
         Note the profiling will not start until :func:`start` is called.
@@ -61,8 +62,8 @@ class Profiler:
         self._active_session = None
         self._async_mode = async_mode
 
-        self.current_energy = Energy(domain).current_energy if domain else None
-        self.domain_name = domain_name
+        self.domain = energy.parse_domain(package, component)
+        self.current_energy = energy.Energy(self.domain).current_energy
 
     @property
     def interval(self) -> float:
