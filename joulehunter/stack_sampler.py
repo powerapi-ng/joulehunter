@@ -4,7 +4,7 @@ import threading
 import timeit
 import types
 from contextvars import ContextVar
-from typing import Any, Callable, List, NamedTuple, Optional
+from typing import Any, Callable, List, NamedTuple, Optional, Union
 
 from joulehunter.low_level.stat_profile import setstatprofile
 from joulehunter.typing import LiteralStr
@@ -44,9 +44,9 @@ class StackSampler:
     subscribers: list[StackSamplerSubscriber]
     current_sampling_interval: float | None
     last_profile_time: float
-    timer_func: Optional[Callable[[], float]]
+    timer_func: Callable[[], float]
 
-    def __init__(self, timer_func=None) -> None:
+    def __init__(self, timer_func) -> None:
         self.subscribers = []
         self.current_sampling_interval = None
         self.last_profile_time = 0.0
@@ -148,16 +148,13 @@ class StackSampler:
             self.last_profile_time = now
 
     def _timer(self):
-        if self.timer_func:
-            return self.timer_func()
-        else:
-            return timeit.default_timer()
+        return self.timer_func()
 
     class SubscriberNotFound(Exception):
         pass
 
 
-def get_stack_sampler(timer_func=None) -> StackSampler:
+def get_stack_sampler(timer_func) -> StackSampler:
     """
     Gets the stack sampler for the current thread, creating it if necessary
     """
