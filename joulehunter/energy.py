@@ -83,7 +83,7 @@ def parse_domain(package, component):
 
     domain = [f'intel-rapl:{package}']
 
-    if component:
+    if component is not None:
         component = str(component)
         if not component.isnumeric():
             component = component_name_to_num(available_domains_, component)
