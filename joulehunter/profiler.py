@@ -156,7 +156,8 @@ class Profiler:
             raise RuntimeError("This profiler is not currently running.")
 
         try:
-            get_stack_sampler().unsubscribe(self._sampler_saw_call_stack)
+            get_stack_sampler(self.current_energy)\
+                .unsubscribe(self._sampler_saw_call_stack)
         except StackSampler.SubscriberNotFound:
             raise RuntimeError(
                 "Failed to stop profiling. Make sure that you start/stop profiling on the same thread."
