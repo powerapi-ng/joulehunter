@@ -105,6 +105,11 @@ class Profiler:
         """
         return self._last_session
 
+    @property
+    def domain_names(self) -> list[str]:
+        return [energy.domain_name(self.domain[:index+1])
+                for index in range(len(self.domain))]
+
     def start(self, caller_frame: types.FrameType | None = None):
         """
         Instructs the profiler to start - to begin observing the program's execution and recording
@@ -164,7 +169,7 @@ class Profiler:
             sample_count=len(self._active_session.frame_records),
             program=" ".join(sys.argv),
             start_call_stack=self._active_session.start_call_stack,
-            domain_name=self.domain_name,
+            domain_names=self.domain_names
         )
         self._active_session = None
 
