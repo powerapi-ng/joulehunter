@@ -141,9 +141,9 @@ class Profiler:
             get_stack_sampler(self.current_energy).subscribe(
                 self._sampler_saw_call_stack, self.interval, use_async_context
             )
-        except e:
+        except Exception as e:
             self._active_session = None
-            raise
+            raise e
 
     def stop(self) -> Session:
         """
