@@ -27,6 +27,8 @@ You can also clone the repo and install it directly:
 Usage
 ------------
 
+### Command line
+
 Joulehunter works similarly to [pyinstrument](https://github.com/joerick/pyinstrument), as we forked the repo and replaced time measuring with energy measuring. Here's [pyinstrument's documentation](https://pyinstrument.readthedocs.io/).
 
 ```joulehunter -l``` will list the available domains on this machine. These include the packages and their components, such as the DRAM and core.
@@ -38,7 +40,7 @@ To select the package to analyze use the option ```-p``` or ```--package``` foll
 The options ```-c``` and ```--component``` allow you to measure the energy of an individual component by specifying their name or ID. If not specified, the entire package will be selected.
 
 
-### Example
+#### Example
 
 Executing ```joulehunter -l``` could output this:
     
@@ -52,6 +54,16 @@ Executing ```joulehunter -l``` could output this:
       [2] dram
 
 If we run ```joulehunter -p package-1 -c 2 my_file.py```, joulehunter will execute ```my_file.py``` and measure the energy consumption of package-1's DRAM.
+
+### Profiling chunks of code
+
+As [pyinstrument's documentation](https://pyinstrument.readthedocs.io/en/latest/guide.html#profile-a-specific-chunk-of-code) shows, it's also possible to profile specific chunks of code.
+
+Joulehunter's Profiler class can receive two additional arguments: ```package``` and ```component```. They receive the ID (as a string or integer) or name of the desired package/component. If ```package``` is not specified, ```package-0``` will be used. If ```component``` is ```None```, the entire package will be analyzed.
+
+### Profiling web requests in Django or Flask
+
+Using joulehunter with Django or Flask hasn't been looked into yet.
 
 Read permission
 ------------
