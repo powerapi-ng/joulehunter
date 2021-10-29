@@ -27,9 +27,9 @@ You can also clone the repo and install it directly:
 Usage
 ------------
 
-### Command line
+Joulehunter works similarly to [pyinstrument](https://github.com/joerick/pyinstrument), as we forked the repo and replaced time measuring with energy measuring. Here's [pyinstrument's documentation](https://pyinstrument.readthedocs.io/). Whenever ```pyinstrument``` is present in a variable name, it should be replaced with ```joulehunter``` (for example, ```PYINSTRUMENT_PROFILE_DIR``` turns into ```JOULEHUNTER_PROFILE_DIR```).
 
-Joulehunter works similarly to [pyinstrument](https://github.com/joerick/pyinstrument), as we forked the repo and replaced time measuring with energy measuring. Here's [pyinstrument's documentation](https://pyinstrument.readthedocs.io/).
+### Command line
 
 ```joulehunter -l``` will list the available domains on this machine. These include the packages and their components, such as the DRAM and core.
 
@@ -61,9 +61,23 @@ As [pyinstrument's documentation](https://pyinstrument.readthedocs.io/en/latest/
 
 Joulehunter's Profiler class can receive two additional arguments: ```package``` and ```component```. They receive the ID (as a string or integer) or name of the desired package/component. If ```package``` is not specified, ```package-0``` will be used. If ```component``` is ```None```, the entire package will be analyzed.
 
-### Profiling web requests in Django or Flask
+### Profiling web requests in Flask
 
-Using joulehunter with Django or Flask hasn't been looked into yet.
+Please refer to [pyinstrument's documentation](https://pyinstrument.readthedocs.io/en/latest/guide.html#profile-a-web-request-in-flask) for instructions on how to profile web requests in Flask. As in the previous case, joulehunter's ```Profiler()``` accepts two additional arguments.
+
+### Profiling web requests in Django
+
+Profiling web requests in Django as explained in [pyinstrument's documentation](https://pyinstrument.readthedocs.io/en/latest/guide.html#profile-a-web-request-in-django) selects package 0 as the default domain (don't forget to rename the ```pyinstrument``` in variable names with ```joulehunter```).
+
+The user can choose a particular package and component as follows:
+
+**Query component**: The query strings ```package``` and ```component``` are used to select the desired package and component. For example, including ```?profiler&package=0&component=dram``` at the end of a request URL will select the first package and the DRAM. If the component query component is present but empty, the package will be analyzed.
+
+
+**Variable in ```settings.py```:** The user's selection can also be defined in ```settings.py``` with the ```JOULEHUNTER_PACKAGE``` and ```JOULEHUNTER_COMPONENT``` variables. These are later passed to ```Package()```.
+
+If the package or component is defined both as a query component and in ```settings.py```, the one defined as a query component will be selected.
+
 
 Read permission
 ------------
