@@ -27,7 +27,7 @@ class Session:
         sample_count: int,
         start_call_stack: list[str],
         program: str,
-        domain_name: list[str],
+        domain_names: list[str],
     ):
         """Session()
 
@@ -41,7 +41,7 @@ class Session:
         self.sample_count = sample_count
         self.start_call_stack = start_call_stack
         self.program = program
-        self.domain_name = domain_name
+        self.domain_names = domain_names
 
     @staticmethod
     def load(filename: PathOrStr) -> Session:
@@ -71,7 +71,7 @@ class Session:
             "sample_count": self.sample_count,
             "start_call_stack": self.start_call_stack,
             "program": self.program,
-            "domain_name": self.domain_name,
+            "domain_names": self.domain_names,
         }
 
     @staticmethod
@@ -83,7 +83,7 @@ class Session:
             sample_count=json_dict["sample_count"],
             start_call_stack=json_dict["start_call_stack"],
             program=json_dict["program"],
-            domain_name=json_dict["domain_name"],
+            domain_names=json_dict["domain_names"],
         )
 
     @staticmethod
@@ -108,7 +108,7 @@ class Session:
             sample_count=session1.sample_count + session2.sample_count,
             start_call_stack=session1.start_call_stack,
             program=session1.program,
-            domain_name=session1.domain_name,
+            domain_names=session1.domain_names,
         )
 
     def root_frame(self, trim_stem: bool = True) -> BaseFrame | None:

@@ -4,10 +4,11 @@ import inspect
 import sys
 import time
 import types
-from typing import IO, Any
+from typing import IO, Any, Union
+
+import joulehunter.energy as energy
 
 from joulehunter import renderers
-from joulehunter.energy import Energy
 from joulehunter.frame import AWAIT_FRAME_IDENTIFIER, OUT_OF_CONTEXT_FRAME_IDENTIFIER
 from joulehunter.session import Session
 from joulehunter.stack_sampler import AsyncState, StackSampler, build_call_stack, get_stack_sampler
@@ -47,8 +48,8 @@ class Profiler:
             self,
             interval: float = 0.001,
             async_mode: AsyncMode = "disabled",
-            domain=None,
-            domain_name=None,
+            package: Union[str, int] = 0,
+            component: Union[str, int] = None
     ):
         """
         Note the profiling will not start until :func:`start` is called.
@@ -61,8 +62,8 @@ class Profiler:
         self._active_session = None
         self._async_mode = async_mode
 
-        self.current_energy = Energy(domain).current_energy if domain else None
-        self.domain_name = domain_name
+        self.domain = energy.parse_domain(package, component)
+        self.current_energy = energy.Energy(self.domain).current_energy
 
     @property
     def interval(self) -> float:
@@ -105,6 +106,11 @@ class Profiler:
         """
         return self._last_session
 
+    @property
+    def domain_names(self) -> list[str]:
+        return [energy.domain_name(self.domain[:index+1])
+                for index in range(len(self.domain))]
+
     def start(self, caller_frame: types.FrameType | None = None):
         """
         Instructs the profiler to start - to begin observing the program's execution and recording
@@ -136,9 +142,9 @@ class Profiler:
             get_stack_sampler(self.current_energy).subscribe(
                 self._sampler_saw_call_stack, self.interval, use_async_context
             )
-        except e:
+        except Exception as e:
             self._active_session = None
-            raise
+            raise e
 
     def stop(self) -> Session:
         """
@@ -151,7 +157,8 @@ class Profiler:
             raise RuntimeError("This profiler is not currently running.")
 
         try:
-            get_stack_sampler().unsubscribe(self._sampler_saw_call_stack)
+            get_stack_sampler(self.current_energy)\
+                .unsubscribe(self._sampler_saw_call_stack)
         except StackSampler.SubscriberNotFound:
             raise RuntimeError(
                 "Failed to stop profiling. Make sure that you start/stop profiling on the same thread."
@@ -164,7 +171,7 @@ class Profiler:
             sample_count=len(self._active_session.frame_records),
             program=" ".join(sys.argv),
             start_call_stack=self._active_session.start_call_stack,
-            domain_name=self.domain_name,
+            domain_names=self.domain_names
         )
         self._active_session = None
 

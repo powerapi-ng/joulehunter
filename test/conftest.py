@@ -37,7 +37,7 @@ def new_init(self, async_mode="disabled"):
     self._active_session = None
     self._async_mode = async_mode
     self.current_energy = current_energy
-    self.domain_name = ["0", "mockup"]
+    self.domain_names = ["0", "mockup"]
 
 
 @pytest.fixture(autouse=True)

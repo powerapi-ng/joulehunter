@@ -234,20 +234,6 @@ def main():
         print(energy.stringify_domains(available_domains))
         sys.exit(0)
 
-    available_domains = energy.available_domains()
-
-    if not options.package.isnumeric():
-        options.package = energy.package_name_to_num(available_domains,
-                                                     options.package)
-
-    domain = [f'intel-rapl:{options.package}']
-
-    if options.component:
-        if not options.component.isnumeric():
-            options.component = energy.component_name_to_num(
-                available_domains, options.component)
-        domain.append(f'intel-rapl:{options.package}:{options.component}')
-
     if args == [] and options.module_name is None and options.load_prev is None:
         parser.print_help()
         sys.exit(2)
@@ -313,8 +299,9 @@ def main():
         # profiler errors.
         profiler = Profiler(
             async_mode="disabled",
-            domain=domain,
-            domain_name=energy.dirnames_to_names(available_domains, domain))
+            package=options.package,
+            component=options.component
+        )
 
         profiler.start()
 
