@@ -122,7 +122,6 @@ def test_context_manager():
     assert frame.function == "test_context_manager"
     assert len(frame.children) == 2
 
-
 def test_json_output():
     with fake_time():
         with Profiler() as profiler:
@@ -132,13 +131,17 @@ def test_json_output():
     output_data = profiler.output(renderers.JSONRenderer())
 
     output = json.loads(output_data)
-    assert "root_frame" in output
 
-    root_frame = output["root_frame"]
+    assert len(output["children"]) == 2
 
-    assert root_frame["function"] == "test_json_output"
-    assert len(root_frame["children"]) == 2
+    def rec_test(dict):
+        assert "name" in dict
+        assert "value" in dict
+        assert "children" in dict
+        for sub_dict in dict["children"]:
+            rec_test(sub_dict)
 
+    rec_test(output)
 
 def test_empty_profile(monkeypatch):
     with Profiler() as profiler:

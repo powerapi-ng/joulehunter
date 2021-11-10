@@ -35,15 +35,14 @@ class JSONRenderer(Renderer):
         # crashes on deep but valid call stacks
 
         property_decls: list[str] = []
-        property_decls.append('"function": %s' % encode_str(frame.function or ""))
-        property_decls.append('"file_path_short": %s' % encode_str(frame.file_path_short or ""))
-        property_decls.append('"file_path": %s' % encode_str(frame.file_path or ""))
-        property_decls.append('"line_no": %d' % frame.line_no)
-        property_decls.append('"time": %f' % frame.time())
-        property_decls.append('"await_time": %f' % frame.await_time())
-        property_decls.append(
-            '"is_application_code": %s' % encode_bool(frame.is_application_code or False)
-        )
+        property_decls.append('"name": %s ' % encode_str(frame.function or ""))
+        property_decls.append('"value": %f' % (frame.time() * 1000) )
+        #property_decls.append('"line_no": %d' % frame.line_no)
+        #property_decls.append('"file_path_short": %s' % encode_str(frame.file_path_short or ""))
+        #property_decls.append('"await_time": %f' % frame.await_time())
+        #property_decls.append(
+        #    '"is_application_code": %s' % encode_bool(frame.is_application_code or False)
+        #)
 
         # can't use list comprehension here because it uses two stack frames each time.
         children_jsons: list[str] = []
@@ -51,29 +50,15 @@ class JSONRenderer(Renderer):
             children_jsons.append(self.render_frame(child))
         property_decls.append('"children": [%s]' % ",".join(children_jsons))
 
-        if frame.group:
-            property_decls.append('"group_id": %s' % encode_str(frame.group.id))
+        #if frame.group:
+        #    property_decls.append('"group_id": %s' % encode_str(frame.group.id))
 
         return "{%s}" % ",".join(property_decls)
 
     def render(self, session: Session):
         frame = self.preprocess(session.root_frame())
 
-        property_decls: list[str] = []
-        property_decls.append('"start_time": %f' % session.start_time)
-        property_decls.append('"duration": %f' % session.duration)
-        property_decls.append('"sample_count": %d' % session.sample_count)
-        property_decls.append('"program": %s' % encode_str(session.program))
-        property_decls.append(
-            '"package": %s' % encode_str(session.domain_name[0]))
-        if len(session.domain_name) == 2:
-            property_decls.append(
-                '"component": %s' % encode_str(session.domain_name[1]))
-        else:
-            property_decls.append('"component": null')
-        property_decls.append('"root_frame": %s' % self.render_frame(frame))
-
-        return "{%s}\n" % ",".join(property_decls)
+        return self.render_frame(frame)
 
     def default_processors(self) -> ProcessorList:
         return [

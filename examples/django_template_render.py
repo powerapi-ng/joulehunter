@@ -43,4 +43,10 @@ def main():
 
 
 if __name__ == "__main__":
+    import joulehunter
+
+    p = joulehunter.Profiler()
+    p.start()
     main()
+    p.stop()
+    p.open_in_browser()
