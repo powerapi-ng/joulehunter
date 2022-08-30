@@ -65,10 +65,10 @@ class JSONRenderer(Renderer):
         property_decls.append('"sample_count": %d' % session.sample_count)
         property_decls.append('"program": %s' % encode_str(session.program))
         property_decls.append(
-            '"package": %s' % encode_str(session.domain_name[0]))
-        if len(session.domain_name) == 2:
+            '"package": %s' % encode_str(session.domain_names[0]))
+        if len(session.domain_names) == 2:
             property_decls.append(
-                '"component": %s' % encode_str(session.domain_name[1]))
+                '"component": %s' % encode_str(session.domain_names[1]))
         else:
             property_decls.append('"component": null')
         property_decls.append('"root_frame": %s' % self.render_frame(frame))

@@ -52,12 +52,12 @@ class ConsoleRenderer(Renderer):
             f"{c.bold}{c.cyan}|/                                {c.end}{c.end}",
         ]
         lines[1] += f"{c.cyan}Duration:{c.end} {session.duration:<12.3f}"
-        lines[2] += f"{c.cyan}Package:{c.end}  {session.domain_name[0]:<12}"
+        lines[2] += f"{c.cyan}Package:{c.end}  {session.domain_names[0]:<12}"
         lines[3] += f"{c.cyan}Program:{c.end}  {session.program}"
 
         lines[1] += f"{c.cyan}Samples:{c.end}   {session.sample_count}"
-        if len(session.domain_name) == 2:
-            lines[2] += f"{c.cyan}Component:{c.end} {session.domain_name[1]}"
+        if len(session.domain_names) == 2:
+            lines[2] += f"{c.cyan}Component:{c.end} {session.domain_names[1]}"
         lines.append("")
         lines.append("")
 
