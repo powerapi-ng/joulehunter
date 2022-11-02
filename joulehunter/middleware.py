@@ -32,7 +32,24 @@ class ProfilerMiddleware(MiddlewareMixin):  # type: ignore
             show_joulehunter(request)
             and getattr(settings, "JOULEHUNTER_URL_ARGUMENT", "profile") in request.GET
         ) or profile_dir:
-            profiler = Profiler()
+            package = request.GET.get(
+                "package",
+                getattr(settings, "JOULEHUNTER_PACKAGE", None)
+            )
+            component = request.GET.get(
+                "component",
+                getattr(settings, "JOULEHUNTER_COMPONENT", None)
+            )
+            if package == '':
+                package = None
+            if component == '':
+                component = None
+
+            if package is not None:
+                profiler = Profiler(package=package,
+                                    component=component)
+            else:
+                profiler = Profiler(component=component)
             profiler.start()
 
             request.profiler = profiler

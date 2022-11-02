@@ -32,7 +32,10 @@ def available_domains() -> list[dict[str, Any]]:
 
 
 def domain_name(dirnames: list[str]) -> str:
-    with open(os.path.join(RAPL_API_DIR, *dirnames, "name"), "r") as file:
+    rapl_name_path = os.path.join(RAPL_API_DIR, *dirnames, "name")
+    if not os.path.exists(rapl_name_path):
+        raise RuntimeError("Domain not found")
+    with open(rapl_name_path, "r") as file:
         return file.readline().strip()
 
 
@@ -50,7 +53,7 @@ def package_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
     for package in domains:
         if package['name'] == name:
             return package['dirname'].split(':')[-1]
-    raise RuntimeError("Package not found")
+    raise RuntimeError("Package name not found")
 
 
 def component_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
@@ -58,7 +61,7 @@ def component_name_to_num(domains: list[dict[str, Any]], name: str) -> str:
         for component in package["components"]:
             if component['name'] == name:
                 return component['dirname'].split(':')[-1]
-    raise RuntimeError("component not found")
+    raise RuntimeError("Component name not found")
 
 
 def dirnames_to_names(domains: list[dict[str, Any]],
@@ -74,6 +77,24 @@ def dirnames_to_names(domains: list[dict[str, Any]],
     return names
 
 
+def parse_domain(package, component):
+    available_domains_ = available_domains()
+
+    package = str(package)
+    if not package.isnumeric():
+        package = package_name_to_num(available_domains_, package)
+
+    domain = [f'intel-rapl:{package}']
+
+    if component is not None:
+        component = str(component)
+        if not component.isnumeric():
+            component = component_name_to_num(available_domains_, component)
+        domain.append(f'intel-rapl:{package}:{component}')
+
+    return domain
+
+
 class Energy:
     def __init__(self, dirnames: list[str]) -> None:
         self.generator = Energy.current_energy_generator(dirnames)
@@ -81,11 +102,11 @@ class Energy:
     @staticmethod
     def current_energy_generator(dirnames: list[str]) -> Generator[
             float, None, None]:
-        rapl_api_path = os.path.join(RAPL_API_DIR, *dirnames, 'energy_uj')
+        rapl_energy_path = os.path.join(RAPL_API_DIR, *dirnames, 'energy_uj')
 
-        if not os.path.exists(rapl_api_path):
+        if not os.path.exists(rapl_energy_path):
             raise RuntimeError("Domain not found")
-        with open(rapl_api_path, 'r') as file:
+        with open(rapl_energy_path, 'r') as file:
             while True:
                 energy = float(file.readline()[:-1]) / 10**6
                 file.seek(0)
